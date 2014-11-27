@@ -60,11 +60,24 @@ public class ChatNI {
         udpsend.sendHelloAck(ip);
         //ajouter l'utilisateur distant dans la liste
     }
-    //public void processHelloAck(nickname,ip){}
-    //public void processGoodBye(nickname,ip){}
-    //public void sendMessageTo(ip,message,conv){}
+    public void processHelloAck(String nickname,InetAddress ip){
+        //ajouter l'utilisateur distant dans la liste
+    }
+    
+    public void processGoodBye(String nickname,InetAddress ip){
+        //retirer l'utilisateur distant de la liste
+    }
+    
+    public void sendMessageTo(InetAddress ip,String message,int conv) throws IOException{
+        udpsend.sendMsg(ip, message);
+    }
+    
+    public void processMsg(InetAddress ip,String message,int conv){
+        //écrire le message dans l'historique
+    }
+
     //public void transferFile(ip,filepath,conv){}
     //public void processFile(filepath, remote ip,conv){}
-    //public void processMsg(remote ip,message,conv){}
-
+    
+    
 }

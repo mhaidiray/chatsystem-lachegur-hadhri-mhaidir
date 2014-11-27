@@ -74,7 +74,7 @@ public class UDPReceiver implements Runnable{
                 }
                 else if (aMessage.getTypeContenu() == typeContenu.TEXTMESSAGE){
                         TextMessage msgSerialise = (TextMessage) aMessage;
-                        System.out.println("C'est un TEXTMESSAGE ! " + nickn);
+                        System.out.println("C'est un TEXTMESSAGE ! " + nickn +":"+msgSerialise.getMessage());
                 }
             }
             }

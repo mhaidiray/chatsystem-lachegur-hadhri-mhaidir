@@ -18,9 +18,8 @@ public class ChatSystem {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        ChatNI ni=new ChatNI();
-        ni.setLocal_nickname("salim");
-        ni.performConnect();
-        ni.sendMessageTo(InetAddress.getByName("INSA-08135"), "tete de bite", 0);
+        ChatController control=new ChatController();
+        control.processConnect("samih");
+        System.out.println(control.users);
     }
 }

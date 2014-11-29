@@ -17,23 +17,36 @@ import java.util.Set;
  * @author lachegur
  */
 public class ChatController {
+    //the model
+    private String nickname;
+    HashMap<String,InetAddress> users;
+    
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
     private ChatGUI gui;
     private ChatNI ni;
     //private ChatGUI gui;
     
-    HashMap<String,InetAddress> users;
+    
 
     public ChatController() throws SocketException {
         this.users = new HashMap<String,InetAddress>();
-        ChatNI chatni = new ChatNI();
-        this.ni=chatni;
-        chatni.setControl(this);
+        
         ChatGUI gui=new ChatGUI();
         gui.setChatctr(this);
+        (new Thread(gui)).start();
     }
     
     public void processConnect(String nickname) throws IOException{
-        this.ni.setLocal_nickname(nickname);
+        ChatNI chatni = new ChatNI();
+        this.ni=chatni;
+        chatni.setControl(this);
+        this.setNickname(nickname);
         this.ni.performConnect();
     }
     
@@ -45,6 +58,8 @@ public class ChatController {
         }
         users.clear();
         ni.closeThreads();
+        this.ni=null;
+        this.nickname=null;
     }
     
     public void addUser(String nickname, InetAddress ip){//ususally called by chatNI

@@ -14,7 +14,9 @@ import java.net.*;
  */
 public class ChatNI {
     
-    private String local_nickname;
+    public String local_nickname(){
+        return this.control.getNickname();
+    }
     private UDPSender udpsend;
     private UDPReceiver udprcv;
     private ChatController control;
@@ -31,13 +33,6 @@ public class ChatNI {
         return udprcv;
     }
 
-    public void setLocal_nickname(String local_nickname) {
-        this.local_nickname = local_nickname;
-    }
-    
-    public String getLocal_nickname() {
-        return local_nickname;
-    }
     
     public ChatNI() throws SocketException{
         DatagramSocket socket=new DatagramSocket(9876);
@@ -45,10 +40,13 @@ public class ChatNI {
         
         UDPSender sender=new UDPSender(socket);
         UDPReceiver receiver=new UDPReceiver(socket);
+        
         this.udprcv=receiver;
         this.udpsend=sender;
+        
         receiver.setNi(this);
         sender.setNi(this);
+        
         (new Thread(receiver)).start();
     }
     

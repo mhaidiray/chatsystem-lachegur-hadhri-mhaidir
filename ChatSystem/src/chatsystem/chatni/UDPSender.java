@@ -51,24 +51,7 @@ public class UDPSender {
         out.writeObject(h);
         byte[] byteArray = bos.toByteArray();
         //envoie en broadcast
-        send(InetAddress.getByName("255.255.255;255"),byteArray);
-        /*Enumeration interfaces = NetworkInterface.getNetworkInterfaces();
-	  while (interfaces.hasMoreElements()) {
-	    NetworkInterface networkInterface = (NetworkInterface) interfaces.nextElement();
-	     if (networkInterface.isLoopback() || !networkInterface.isUp()) {
-	      continue; // Don't want to broadcast to the loopback interface
-	    }
-	 for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
-	      InetAddress broadcast = interfaceAddress.getBroadcast();
-	      if (broadcast == null) {
-	        continue;
-	      }
-	      try {
-	        send(broadcast,byteArray);
-	      } catch (Exception e) {
-	      }
-            }
-	 }*/  
+        send(InetAddress.getByName("255.255.255.255"),byteArray);
     }
     
     public void sendHelloAck(InetAddress ip) throws IOException{
@@ -79,8 +62,6 @@ public class UDPSender {
         byte[] byteArray = bos.toByteArray();
         send(ip,byteArray);
     }
-    
-    
     
     public void sendGoodBye(InetAddress ip) throws IOException{
         Goodbye h=new Goodbye(this.getNi().getLocal_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());//création de l'instance hello

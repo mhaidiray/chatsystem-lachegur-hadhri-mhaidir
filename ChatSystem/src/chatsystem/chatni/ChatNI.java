@@ -52,6 +52,10 @@ public class ChatNI {
         (new Thread(receiver)).start();
     }
     
+    public void closeThreads() {
+        udprcv.close();
+        //TODO : close thread of tcp instances
+    }
     
     public void performConnect() throws IOException{//sends a hello in broadcast
        udpsend.sendHello();

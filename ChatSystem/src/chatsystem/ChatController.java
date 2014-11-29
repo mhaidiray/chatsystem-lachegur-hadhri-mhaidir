@@ -40,7 +40,7 @@ public class ChatController {
             this.ni.disconnectFrom(users.get(nickn));
         }
         users.clear();
-        //TODO : fermer les thread du ni
+        ni.closeThreads();
     }
     
     public void addUser(String nickname, InetAddress ip){//ususally called by chatNI

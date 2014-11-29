@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package chatsystem;
-
+import chatsystem.chatgui.ChatGUI;
 import chatsystem.chatni.ChatNI;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -18,8 +18,8 @@ public class ChatSystem {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        ChatController control=new ChatController();
-        control.processConnect("samih");
+        ChatGUI gui=new ChatGUI();
+        gui.run();
         
     }
 }

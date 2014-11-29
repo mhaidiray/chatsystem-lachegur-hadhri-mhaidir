@@ -21,7 +21,7 @@ import java.io.ObjectInputStream;
 public class UDPReceiver implements Runnable{
     private DatagramSocket socket=null;
     private ChatNI ni;
-
+    private volatile boolean stop;
     public ChatNI getNi() {
         return ni;
     }
@@ -31,6 +31,7 @@ public class UDPReceiver implements Runnable{
     }
     public UDPReceiver(DatagramSocket socket) {
         this.socket = socket;
+        stop=false;
     }
     
     public String extractNickname(String nick){
@@ -42,44 +43,47 @@ public class UDPReceiver implements Runnable{
         return InetAddress.getByName(aux);
     }
     
+    public void close() {
+        this.stop=true;
+    }
     private DatagramPacket packet=null;
     public void run(){
         try {
             byte[] buf=new byte[512];
             packet=new DatagramPacket(buf,buf.length);
-            while (true){
-            socket.receive(packet);
-            ByteArrayInputStream bin = null;
-            ObjectInput in = null;
-            ByteArrayInputStream byteIn = new ByteArrayInputStream(packet.getData());
-            in = new ObjectInputStream(byteIn);
-            AbstractMessage aMessage = (AbstractMessage) in.readObject();
-            String nickn=extractNickname(aMessage.getNickname());
-            InetAddress remoteip=extractIp(aMessage.getNickname());
-            if (!(this.getNi().getLocal_nickname()+"@"+InetAddress.getLocalHost().getHostAddress()).equals(aMessage.getNickname())){
+            while (!stop){
+                socket.receive(packet);
+                ByteArrayInputStream bin = null;
+                ObjectInput in = null;
+                ByteArrayInputStream byteIn = new ByteArrayInputStream(packet.getData());
+                in = new ObjectInputStream(byteIn);
+                AbstractMessage aMessage = (AbstractMessage) in.readObject();
+                String nickn=extractNickname(aMessage.getNickname());
+                InetAddress remoteip=extractIp(aMessage.getNickname());
+                if (!(this.getNi().getLocal_nickname()+"@"+InetAddress.getLocalHost().getHostAddress()).equals(aMessage.getNickname())){
 
-                if (aMessage.getTypeContenu() == typeContenu.HELLO){
-                        Hello helloSerialise = (Hello) aMessage;
-                        System.out.println("C'est un HELLO ! " + nickn);
-                        this.ni.processHello(nickn,remoteip);
-                        
+                    if (aMessage.getTypeContenu() == typeContenu.HELLO){
+                            Hello helloSerialise = (Hello) aMessage;
+                            System.out.println("C'est un HELLO ! " + nickn);
+                            this.ni.processHello(nickn,remoteip);
+
+                    }
+                    else if (aMessage.getTypeContenu() == typeContenu.GOODBYE){
+                            Goodbye goodbyeSerialise = (Goodbye) aMessage;
+                            System.out.println("C'est un GOODBYE ! " + nickn);
+                            this.ni.processGoodBye(nickn);
+                    }
+                    else if (aMessage.getTypeContenu() == typeContenu.HELLOACK){
+                            HelloAck helloackSerialise = (HelloAck) aMessage;
+                            System.out.println("C'est un HELLOACK ! " + nickn);
+                            this.ni.processHelloAck(nickn, remoteip);
+                    }
+                    else if (aMessage.getTypeContenu() == typeContenu.TEXTMESSAGE){
+                            TextMessage msgSerialise = (TextMessage) aMessage;
+                            System.out.println("C'est un TEXTMESSAGE ! " + nickn +":"+msgSerialise.getMessage());
+                            this.ni.processMsg(remoteip, nickn, 0);
+                    }
                 }
-                else if (aMessage.getTypeContenu() == typeContenu.GOODBYE){
-                        Goodbye goodbyeSerialise = (Goodbye) aMessage;
-                        System.out.println("C'est un GOODBYE ! " + nickn);
-                        this.ni.processGoodBye(nickn);
-                }
-                else if (aMessage.getTypeContenu() == typeContenu.HELLOACK){
-                        HelloAck helloackSerialise = (HelloAck) aMessage;
-                        System.out.println("C'est un HELLOACK ! " + nickn);
-                        this.ni.processHelloAck(nickn, remoteip);
-                }
-                else if (aMessage.getTypeContenu() == typeContenu.TEXTMESSAGE){
-                        TextMessage msgSerialise = (TextMessage) aMessage;
-                        System.out.println("C'est un TEXTMESSAGE ! " + nickn +":"+msgSerialise.getMessage());
-                        this.ni.processMsg(remoteip, nickn, 0);
-                }
-            }
             }
         } catch (SocketException ex) {
             Logger.getLogger(UDPReceiver.class.getName()).log(Level.SEVERE, null, ex);
@@ -88,5 +92,6 @@ public class UDPReceiver implements Runnable{
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(UDPReceiver.class.getName()).log(Level.SEVERE, null, ex);
         }
+        Thread.currentThread().interrupt();
     }
 }

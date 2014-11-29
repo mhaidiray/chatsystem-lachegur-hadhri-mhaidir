@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package chatsystem;
+package chatsystem.chatni;
 
 /**
  *
  * @author Machd
  */
-public class TCPReceiver {
+public class TCPSender {
     
 }

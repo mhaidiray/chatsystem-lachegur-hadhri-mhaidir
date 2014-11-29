@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package chatsystem;
+package chatsystem.chatni;
 
+import chatsystem.ChatController;
 import java.io.IOException;
 import java.net.*;
 
@@ -16,23 +17,20 @@ public class ChatNI {
     private String local_nickname;
     private UDPSender udpsend;
     private UDPReceiver udprcv;
+    private ChatController control;
 
+    public void setControl(ChatController control) {
+        this.control = control;
+    }
+    
     public UDPSender getUdpsend() {
         return udpsend;
-    }
-
-    public void setUdpsend(UDPSender udpsend) {
-        this.udpsend = udpsend;
     }
 
     public UDPReceiver getUdprcv() {
         return udprcv;
     }
 
-    public void setUdprcv(UDPReceiver udprcv) {
-        this.udprcv = udprcv;
-    }
-    
     public void setLocal_nickname(String local_nickname) {
         this.local_nickname = local_nickname;
     }

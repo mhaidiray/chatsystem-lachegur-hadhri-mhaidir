@@ -47,11 +47,13 @@ public class ChatController {
     public void addUser(String nickname, InetAddress ip){//ususally called by chatNI
         this.users.put(nickname, ip);
         //ajouter l'utilisateur dans la liste visuelle
+        System.out.println(users);
     }
     
     public void deleteUser(String nickname){//usually called by chatNI
         this.users.remove(nickname);
         //retirer l'utilisateur dans la liste visuelle
+        System.out.println(users);
     }
     
     /*public void notify(remote ip, payload,conv){}//called by NI

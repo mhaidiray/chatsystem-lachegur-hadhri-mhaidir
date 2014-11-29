@@ -20,6 +20,6 @@ public class ChatSystem {
     public static void main(String[] args) throws IOException {
         ChatController control=new ChatController();
         control.processConnect("samih");
-        System.out.println(control.users);
+        
     }
 }

@@ -48,7 +48,7 @@ public class ChatController {
         //ajouter l'utilisateur dans la liste visuelle
     }
     
-    public void deleteUser(String nickname,InetAddress ip){//usually called by chatNI
+    public void deleteUser(String nickname){//usually called by chatNI
         this.users.remove(nickname);
         //retirer l'utilisateur dans la liste visuelle
     }

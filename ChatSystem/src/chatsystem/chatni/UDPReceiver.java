@@ -60,7 +60,7 @@ public class UDPReceiver implements Runnable{
                 AbstractMessage aMessage = (AbstractMessage) in.readObject();
                 String nickn=extractNickname(aMessage.getNickname());
                 InetAddress remoteip=extractIp(aMessage.getNickname());
-                if (!(this.getNi().getLocal_nickname()+"@"+InetAddress.getLocalHost().getHostAddress()).equals(aMessage.getNickname())){
+                if (!(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress()).equals(aMessage.getNickname())){
 
                     if (aMessage.getTypeContenu() == typeContenu.HELLO){
                             Hello helloSerialise = (Hello) aMessage;

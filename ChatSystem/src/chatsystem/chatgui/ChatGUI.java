@@ -5,29 +5,67 @@
 package chatsystem.chatgui;
 
 import chatsystem.ChatController;
+import java.io.IOException;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
  * @author lachegur
  */
-public class ChatGUI implements Runnable{
+public class ChatGUI extends JFrame implements Runnable  {
     
-    private ChatController chatctr;
+    private ChatController control;
+    private Accueil accueil;
+    private FenetreChat principale;
     
-    private JFrame accueil;
-    private JFrame principale;
+    public ChatGUI () {
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        this.principale=new FenetreChat();
+        this.accueil=new Accueil();
+        this.setTitle("ChatSystem");
+        accueil.setGui(this);
+        principale.setGui(this);
+        this.setSize(accueil.getPreferredSize());
+        this.setContentPane(accueil);
+        this.setVisible(true);
+    }
+    
+    public void switchView() {//go from accueil to chatfenetre
+        principale.nickname(local_nickname());
+        this.setSize(principale.getPreferredSize());
+        this.setContentPane(principale);
+        this.setVisible(true);
+    }
+    
+    public void switchBack() {//go back to accueil
+        principale.nickname(null);
+        this.setSize(accueil.getPreferredSize());
+        this.setContentPane(accueil);
+        this.setVisible(true);
+    }
+    
     public void run() {
-        accueil=new Accueil();
-        accueil.setVisible(true);
+        
     }
     
       public ChatController getChatctr() {
-        return chatctr;
+        return control;
     }
 
     public void setChatctr(ChatController chatctr) {
-        this.chatctr = chatctr;
+        this.control = chatctr;
     }
     
+    public void connect(String nickname) throws IOException {
+        this.control.processConnect(nickname);
+    }
+    
+    public void disconnect() throws IOException {
+        this.control.processDisconnect();
+    }
+    
+    public String local_nickname(){
+        return this.control.getNickname();
+    }
 }

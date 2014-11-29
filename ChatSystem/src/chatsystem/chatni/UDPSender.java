@@ -44,7 +44,7 @@ public class UDPSender {
     
     
     public void sendHello() throws IOException{
-        Hello h=new Hello(this.getNi().getLocal_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());//création de l'instance hello
+        Hello h=new Hello(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());//création de l'instance hello
         //classe -> bytes
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutput out = new ObjectOutputStream(bos);
@@ -55,7 +55,7 @@ public class UDPSender {
     }
     
     public void sendHelloAck(InetAddress ip) throws IOException{
-        HelloAck h=new HelloAck(this.getNi().getLocal_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());//création de l'instance hello
+        HelloAck h=new HelloAck(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());//création de l'instance hello
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutput out = new ObjectOutputStream(bos);
         out.writeObject(h);
@@ -64,7 +64,7 @@ public class UDPSender {
     }
     
     public void sendGoodBye(InetAddress ip) throws IOException{
-        Goodbye h=new Goodbye(this.getNi().getLocal_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());//création de l'instance hello
+        Goodbye h=new Goodbye(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());//création de l'instance hello
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutput out = new ObjectOutputStream(bos);
         out.writeObject(h);
@@ -74,7 +74,7 @@ public class UDPSender {
     
     public void sendMsg(InetAddress ip, String msg) throws SocketException, IOException{
         TextMessage h=new TextMessage(msg);//création de l'instance hello
-        h.setNickname(this.getNi().getLocal_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());
+        h.setNickname(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());
         //gérer la liste des destinataires
         ByteArrayOutputStream bos = new ByteArrayOutputStream(256);
         ObjectOutput out = new ObjectOutputStream(bos);

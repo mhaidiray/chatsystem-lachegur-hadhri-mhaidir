@@ -4,15 +4,18 @@
  */
 package chatsystem.chatgui;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author lachegur
  */
 public class ChatGUI implements Runnable{
-
-    @Override
+    private JFrame accueil;
+    private JFrame principale;
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        accueil=new Accueil();
+        accueil.setVisible(true);
     }
     
 }

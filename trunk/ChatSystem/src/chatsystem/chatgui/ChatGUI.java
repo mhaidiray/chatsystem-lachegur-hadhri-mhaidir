@@ -6,13 +6,13 @@ package chatsystem.chatgui;
 
 /**
  *
- * @author hadhri
+ * @author lachegur
  */
-public class chatGUI implements Runnable{
+public class ChatGUI implements Runnable{
 
     @Override
     public void run() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 }
-

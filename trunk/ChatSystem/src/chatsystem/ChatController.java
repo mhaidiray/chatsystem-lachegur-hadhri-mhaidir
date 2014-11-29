@@ -25,6 +25,7 @@ public class ChatController {
         this.users = new HashMap<String,InetAddress>();
         ChatNI chatni = new ChatNI();
         this.ni=chatni;
+        chatni.setControl(this);
         
     }
     

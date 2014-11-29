@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package chatsystem;
+package chatsystem.chatni;
 
+import chatsystem.chatni.ChatNI;
 import java.io.IOException;
 import java.net.*;
 import java.util.logging.Level;
@@ -66,15 +67,17 @@ public class UDPReceiver implements Runnable{
                 else if (aMessage.getTypeContenu() == typeContenu.GOODBYE){
                         Goodbye goodbyeSerialise = (Goodbye) aMessage;
                         System.out.println("C'est un GOODBYE ! " + nickn);
+                        this.ni.processGoodBye(nickn, remoteip);
                 }
                 else if (aMessage.getTypeContenu() == typeContenu.HELLOACK){
                         HelloAck helloackSerialise = (HelloAck) aMessage;
                         System.out.println("C'est un HELLOACK ! " + nickn);
-                     
+                        this.ni.processHelloAck(nickn, remoteip);
                 }
                 else if (aMessage.getTypeContenu() == typeContenu.TEXTMESSAGE){
                         TextMessage msgSerialise = (TextMessage) aMessage;
                         System.out.println("C'est un TEXTMESSAGE ! " + nickn +":"+msgSerialise.getMessage());
+                        this.ni.processMsg(remoteip, nickn, 0);
                 }
             }
             }

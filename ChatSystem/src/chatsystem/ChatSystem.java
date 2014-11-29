@@ -4,6 +4,7 @@
  */
 package chatsystem;
 
+import chatsystem.chatni.ChatNI;
 import java.io.IOException;
 
 /**

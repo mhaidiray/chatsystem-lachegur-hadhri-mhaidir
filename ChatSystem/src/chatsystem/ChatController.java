@@ -4,8 +4,10 @@
  */
 package chatsystem;
 
+import chatsystem.chatni.ChatNI;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.SocketException;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -19,15 +21,11 @@ public class ChatController {
     
     HashMap<String,InetAddress> users;
 
-    public ChatController() {
+    public ChatController() throws SocketException {
         this.users = new HashMap<String,InetAddress>();
-    }
-    public ChatNI getNi() {
-        return ni;
-    }
-
-    public void setNi(ChatNI ni) {
-        this.ni = ni;
+        ChatNI chatni = new ChatNI();
+        this.ni=chatni;
+        
     }
     
     public void processConnect(String nickname) throws IOException{
@@ -41,6 +39,8 @@ public class ChatController {
         for (String nickn: set){
             this.ni.disconnectFrom(users.get(nickn));
         }
+        users.clear();
+        
     }
     
     public void addUser(String nickname, InetAddress ip){//ususally called by chatNI
@@ -53,11 +53,8 @@ public class ChatController {
         //retirer l'utilisateur dans la liste visuelle
     }
     
-    //public void notify(remote ip, payload,conv){}//called by NI
-    
-    /*public void processSend(nickname,ip,message/filepath,conv){}
-    public void confirmConnect(){}//NI
-    public void confirmDisconnect(){}//NI
+    /*public void notify(remote ip, payload,conv){}//called by NI
+    public void processSend(nickname,ip,message/filepath,conv){}
     public void fileReceived(filepath,remote ip,conv){}//NI
     public void displayMsg(message, remote ip,conv){}//NI
     */

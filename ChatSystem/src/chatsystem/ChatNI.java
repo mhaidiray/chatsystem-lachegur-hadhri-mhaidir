@@ -32,6 +32,15 @@ public class ChatNI {
     public void setUdprcv(UDPReceiver udprcv) {
         this.udprcv = udprcv;
     }
+    
+    public void setLocal_nickname(String local_nickname) {
+        this.local_nickname = local_nickname;
+    }
+    
+    public String getLocal_nickname() {
+        return local_nickname;
+    }
+    
     public ChatNI() throws SocketException{
         DatagramSocket socket=new DatagramSocket(9876);
         socket.setBroadcast(true);
@@ -45,15 +54,13 @@ public class ChatNI {
         (new Thread(receiver)).start();
     }
     
-    public void setLocal_nickname(String local_nickname) {
-        this.local_nickname = local_nickname;
-    }
-    public String getLocal_nickname() {
-        return local_nickname;
+    
+    public void performConnect() throws IOException{//sends a hello in broadcast
+       udpsend.sendHello();
     }
     
-    public void performConnect() throws IOException{
-       udpsend.sendHello();
+    public void disconnectFrom(InetAddress ip) throws IOException{//sends a goodbye to the designed ip
+       udpsend.sendGoodBye(ip);
     }
     
     public void processHello(String nickname,InetAddress ip) throws IOException{

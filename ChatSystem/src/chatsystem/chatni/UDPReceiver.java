@@ -67,7 +67,7 @@ public class UDPReceiver implements Runnable{
                 else if (aMessage.getTypeContenu() == typeContenu.GOODBYE){
                         Goodbye goodbyeSerialise = (Goodbye) aMessage;
                         System.out.println("C'est un GOODBYE ! " + nickn);
-                        this.ni.processGoodBye(nickn, remoteip);
+                        this.ni.processGoodBye(nickn);
                 }
                 else if (aMessage.getTypeContenu() == typeContenu.HELLOACK){
                         HelloAck helloackSerialise = (HelloAck) aMessage;

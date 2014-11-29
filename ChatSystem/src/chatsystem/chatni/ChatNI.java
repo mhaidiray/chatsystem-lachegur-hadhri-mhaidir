@@ -64,13 +64,16 @@ public class ChatNI {
     public void processHello(String nickname,InetAddress ip) throws IOException{
         udpsend.sendHelloAck(ip);
         //ajouter l'utilisateur distant dans la liste
+        this.control.addUser(nickname, ip);
     }
     public void processHelloAck(String nickname,InetAddress ip){
         //ajouter l'utilisateur distant dans la liste
+        this.control.addUser(nickname, ip);
     }
     
-    public void processGoodBye(String nickname,InetAddress ip){
+    public void processGoodBye(String nickname){
         //retirer l'utilisateur distant de la liste
+        this.control.deleteUser(nickname);
     }
     
     public void sendMessageTo(InetAddress ip,String message,int conv) throws IOException{

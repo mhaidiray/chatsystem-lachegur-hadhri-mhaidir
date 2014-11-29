@@ -6,6 +6,7 @@ package chatsystem;
 
 import chatsystem.chatni.ChatNI;
 import java.io.IOException;
+import java.net.InetAddress;
 
 /**
  *
@@ -18,7 +19,8 @@ public class ChatSystem {
      */
     public static void main(String[] args) throws IOException {
         ChatNI ni=new ChatNI();
-        ni.setLocal_nickname("samih");
+        ni.setLocal_nickname("salim");
         ni.performConnect();
+        ni.sendMessageTo(InetAddress.getByName("INSA-08135"), "tete de bite", 0);
     }
 }

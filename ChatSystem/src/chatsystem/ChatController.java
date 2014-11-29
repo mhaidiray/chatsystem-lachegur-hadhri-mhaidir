@@ -26,7 +26,6 @@ public class ChatController {
         ChatNI chatni = new ChatNI();
         this.ni=chatni;
         chatni.setControl(this);
-        
     }
     
     public void processConnect(String nickname) throws IOException{
@@ -41,24 +40,31 @@ public class ChatController {
             this.ni.disconnectFrom(users.get(nickn));
         }
         users.clear();
-        
+        //TODO : fermer les thread du ni
     }
     
     public void addUser(String nickname, InetAddress ip){//ususally called by chatNI
         this.users.put(nickname, ip);
-        //ajouter l'utilisateur dans la liste visuelle
+        //TODO : ajouter l'utilisateur dans la liste visuelle
         System.out.println(users);
     }
     
     public void deleteUser(String nickname){//usually called by chatNI
         this.users.remove(nickname);
-        //retirer l'utilisateur dans la liste visuelle
+        //TODO : etirer l'utilisateur dans la liste visuelle
         System.out.println(users);
     }
     
-    /*public void notify(remote ip, payload,conv){}//called by NI
-    public void processSend(nickname,ip,message/filepath,conv){}
-    public void fileReceived(filepath,remote ip,conv){}//NI
-    public void displayMsg(message, remote ip,conv){}//NI
-    */
+    public void processSend(String nickname,String message,int conv){
+        ni.processMsg(users.get(nickname), message, conv);
+    }
+    
+    public void notify(InetAddress ip,String message,int conv){//called by NI
+        //TODO : afficher une notification de message recu, stocke le message dans une liste qqpart, attend de l'afficher
+    }
+    
+    
+    //public void fileReceived(filepath,remote ip,conv){}//NI
+    
+    
 }

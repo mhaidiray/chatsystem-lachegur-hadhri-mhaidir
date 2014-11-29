@@ -51,8 +51,8 @@ public class UDPSender {
         out.writeObject(h);
         byte[] byteArray = bos.toByteArray();
         //envoie en broadcast
-        
-        Enumeration interfaces = NetworkInterface.getNetworkInterfaces();
+        send(InetAddress.getByName("255.255.255;255"),byteArray);
+        /*Enumeration interfaces = NetworkInterface.getNetworkInterfaces();
 	  while (interfaces.hasMoreElements()) {
 	    NetworkInterface networkInterface = (NetworkInterface) interfaces.nextElement();
 	     if (networkInterface.isLoopback() || !networkInterface.isUp()) {
@@ -68,8 +68,9 @@ public class UDPSender {
 	      } catch (Exception e) {
 	      }
             }
-	 }  
+	 }*/  
     }
+    
     public void sendHelloAck(InetAddress ip) throws IOException{
         HelloAck h=new HelloAck(this.getNi().getLocal_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());//création de l'instance hello
         ByteArrayOutputStream bos = new ByteArrayOutputStream();

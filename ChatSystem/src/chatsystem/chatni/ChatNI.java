@@ -82,6 +82,7 @@ public class ChatNI {
     
     public void processMsg(InetAddress ip,String message,int conv){
         //écrire le message dans l'historique
+        control.notify(ip,message,conv);
     }
 
     //public void transferFile(ip,filepath,conv){}

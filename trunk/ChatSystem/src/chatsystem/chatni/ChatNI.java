@@ -33,11 +33,16 @@ public class ChatNI {
         return udprcv;
     }
 
+    private DatagramSocket sock;
+
+    public void closeSocket() {
+        sock.close();
+    }
     
     public ChatNI() throws SocketException{
         DatagramSocket socket=new DatagramSocket(9876);
         socket.setBroadcast(true);
-        
+        sock=socket;
         UDPSender sender=new UDPSender(socket);
         UDPReceiver receiver=new UDPReceiver(socket);
         

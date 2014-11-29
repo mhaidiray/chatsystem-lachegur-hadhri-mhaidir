@@ -79,7 +79,7 @@ public class FenetreChat extends javax.swing.JPanel {
         jLabel1.setText("Hey dear");
 
         Nickname.setEditable(false);
-        Nickname.setBackground(new java.awt.Color(204, 204, 204));
+        Nickname.setBackground(new java.awt.Color(242, 242, 242));
         Nickname.setBorder(null);
         Nickname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

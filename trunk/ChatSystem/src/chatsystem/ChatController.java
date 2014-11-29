@@ -4,6 +4,7 @@
  */
 package chatsystem;
 
+import chatsystem.chatgui.ChatGUI;
 import chatsystem.chatni.ChatNI;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -16,6 +17,7 @@ import java.util.Set;
  * @author lachegur
  */
 public class ChatController {
+    private ChatGUI gui;
     private ChatNI ni;
     //private ChatGUI gui;
     
@@ -26,6 +28,8 @@ public class ChatController {
         ChatNI chatni = new ChatNI();
         this.ni=chatni;
         chatni.setControl(this);
+        ChatGUI gui=new ChatGUI();
+        gui.setChatctr(this);
     }
     
     public void processConnect(String nickname) throws IOException{

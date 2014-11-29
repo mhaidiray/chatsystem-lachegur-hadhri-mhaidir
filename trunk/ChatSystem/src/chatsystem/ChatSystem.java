@@ -18,8 +18,7 @@ public class ChatSystem {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        ChatGUI gui=new ChatGUI();
-        gui.run();
+        ChatController ctr = new ChatController();
         
     }
 }

@@ -4,6 +4,8 @@
  */
 package chatsystem.chatgui;
 
+import chatsystem.ChatController;
+
 /**
  *
  * @author lachegur
@@ -89,7 +91,11 @@ public class Accueil extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ConnectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConnectButtonActionPerformed
-        // TODO add your handling code here:
+        // we save the nickname
+        String nickname;
+        nickname=NicknameTF.getText();
+        
+        
     }//GEN-LAST:event_ConnectButtonActionPerformed
 
     private void NicknameTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NicknameTFActionPerformed

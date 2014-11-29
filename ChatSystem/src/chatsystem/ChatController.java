@@ -58,6 +58,7 @@ public class ChatController {
         }
         users.clear();
         ni.closeThreads();
+        ni.closeSocket();
         this.ni=null;
         this.nickname=null;
     }

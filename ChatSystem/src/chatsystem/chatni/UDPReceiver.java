@@ -81,7 +81,7 @@ public class UDPReceiver implements Runnable{
                     else if (aMessage.getTypeContenu() == typeContenu.TEXTMESSAGE){
                             TextMessage msgSerialise = (TextMessage) aMessage;
                             System.out.println("C'est un TEXTMESSAGE ! " + nickn +":"+msgSerialise.getMessage());
-                            this.ni.processMsg(remoteip, nickn, 0);
+                            this.ni.processMsg(nickn, msgSerialise.getMessage(), 0);
                     }
                 }
             }

@@ -87,9 +87,9 @@ public class ChatNI {
         udpsend.sendMsg(ip, message);
     }
     
-    public void processMsg(InetAddress ip,String message,int conv){
+    public void processMsg(String nickn,String message,int conv){
         //écrire le message dans l'historique
-        control.notify(ip,message,conv);
+        control.notify(nickn,message,conv);
     }
 
     //public void transferFile(ip,filepath,conv){}

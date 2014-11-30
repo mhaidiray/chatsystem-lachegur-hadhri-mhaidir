@@ -28,18 +28,18 @@ public class ChatController {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+    
+    //GUI and NI
     private ChatGUI gui;
     private ChatNI ni;
-    //private ChatGUI gui;
     
     
 
     public ChatController() throws SocketException {
         this.users = new HashMap<String,InetAddress>();
-        
         ChatGUI gui=new ChatGUI();
         gui.setChatctr(this);
-        (new Thread(gui)).start();
+        (new Thread(gui)).start(); 
     }
     
     public void processConnect(String nickname) throws IOException{
@@ -64,23 +64,23 @@ public class ChatController {
     }
     
     public void addUser(String nickname, InetAddress ip){//ususally called by chatNI
-        this.users.put(nickname, ip);
-        //TODO : ajouter l'utilisateur dans la liste visuelle
-        System.out.println(users);
+        users.put(nickname, ip);
+        gui.updateList(nickname);
     }
     
     public void deleteUser(String nickname){//usually called by chatNI
-        this.users.remove(nickname);
-        //TODO : etirer l'utilisateur dans la liste visuelle
-        System.out.println(users);
+        users.remove(nickname);
+        gui.updateList(nickname);
     }
     
-    public void processSend(String nickname,String message,int conv){
-        ni.processMsg(users.get(nickname), message, conv);
+    public void processSend(String nickname,String message,int conv) throws IOException{
+        if (users.containsKey(nickname)){
+            ni.sendMessageTo(users.get(nickname), message, conv);
+        }
     }
     
-    public void notify(InetAddress ip,String message,int conv){//called by NI
-        //TODO : afficher une notification de message recu, stocke le message dans une liste qqpart, attend de l'afficher
+    public void notify(String nickn,String message,int conv){//called by NI
+        gui.addMsgtoHistory(message, nickn);
     }
     
     

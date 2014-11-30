@@ -37,7 +37,7 @@ public class ChatController {
 
     public ChatController() throws SocketException {
         this.users = new HashMap<String,InetAddress>();
-        ChatGUI gui=new ChatGUI();
+        gui=new ChatGUI();
         gui.setChatctr(this);
         (new Thread(gui)).start(); 
     }

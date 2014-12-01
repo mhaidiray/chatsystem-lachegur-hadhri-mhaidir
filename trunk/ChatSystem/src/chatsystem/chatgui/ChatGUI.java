@@ -6,6 +6,7 @@ package chatsystem.chatgui;
 
 import chatsystem.ChatController;
 import java.io.IOException;
+import java.text.ParseException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -77,7 +78,7 @@ public class ChatGUI extends JFrame implements Runnable  {
         principale.updateList(nickname,x);
     }
     
-    public void addMsgtoHistory(String msg,String sender) {
+    public void addMsgtoHistory(String msg,String sender) throws ParseException {
         principale.addToHistory(msg,sender);
     }
 }

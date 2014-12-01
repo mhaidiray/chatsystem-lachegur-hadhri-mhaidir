@@ -40,8 +40,9 @@ public class FenetreChat extends javax.swing.JPanel {
     }
     
     public void addToHistory(String message,String sender) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat();
-        HistoricArea.setText(HistoricArea.getText()+"\n"+" from "+sender+" : "+message);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm a");
+        Date date = new Date();
+        HistoricArea.setText(HistoricArea.getText()+"\n"+ dateFormat.format(date)+ " from "+sender+" : "+message);
     }
     public FenetreChat() {
         initComponents();

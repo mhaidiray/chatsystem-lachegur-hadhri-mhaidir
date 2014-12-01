@@ -65,12 +65,12 @@ public class ChatController {
     
     public void addUser(String nickname, InetAddress ip){//ususally called by chatNI
         users.put(nickname, ip);
-        gui.updateList(nickname);
+        gui.updateList(nickname,true);
     }
     
     public void deleteUser(String nickname){//usually called by chatNI
         users.remove(nickname);
-        gui.updateList(nickname);
+        gui.updateList(nickname,false);
     }
     
     public void processSend(String nickname,String message,int conv) throws IOException{

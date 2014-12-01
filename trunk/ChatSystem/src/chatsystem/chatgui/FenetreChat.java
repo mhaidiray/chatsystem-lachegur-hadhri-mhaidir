@@ -7,6 +7,9 @@ package chatsystem.chatgui;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -36,7 +39,7 @@ public class FenetreChat extends javax.swing.JPanel {
     }
     
     public void addToHistory(String message,String sender) {
-        HistoricArea.setText(HistoricArea.getText()+"\n"+"from "+sender+" : "+message);
+        HistoricArea.setText(HistoricArea.getText()+"\n"+(new SimpleDateFormat("h:mm"))+" from "+sender+" : "+message);
     }
     public FenetreChat() {
         initComponents();

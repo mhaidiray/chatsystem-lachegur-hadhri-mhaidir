@@ -17,7 +17,6 @@ import javax.swing.DefaultListModel;
  */
 public class FenetreChat extends javax.swing.JPanel {
     private ChatGUI gui;
-    private String currentSelectedUser;
     public void setGui(ChatGUI gui) {
         this.gui = gui;
     }
@@ -29,9 +28,11 @@ public class FenetreChat extends javax.swing.JPanel {
      * Creates new form FenetreChat
      */
     DefaultListModel model;
-    public void updateList(String nickname){
-        if (model.contains(nickname)) {model.removeElement(nickname);}
-        else {model.addElement(nickname);}
+    public void updateList(String nickname,boolean x){
+        if (!x&&model.contains(nickname)) {
+            model.removeElement(nickname);}
+        else if (x&&!model.contains(nickname)){
+            model.addElement(nickname);}
     }
     
     public void addToHistory(String message,String sender) {
@@ -62,14 +63,6 @@ public class FenetreChat extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         Nickname = new javax.swing.JTextField();
 
-        UserList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                UserListMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                UserListMousePressed(evt);
-            }
-        });
         jScrollPane1.setViewportView(UserList);
 
         DisconnectButton.setText("Disconnect");
@@ -83,12 +76,6 @@ public class FenetreChat extends javax.swing.JPanel {
         HistoricArea.setRows(5);
         jScrollPane2.setViewportView(HistoricArea);
 
-        MessageTF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MessageTFActionPerformed(evt);
-            }
-        });
-
         SendButton.setText("Send");
         SendButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,40 +88,30 @@ public class FenetreChat extends javax.swing.JPanel {
         Nickname.setEditable(false);
         Nickname.setBackground(new java.awt.Color(242, 242, 242));
         Nickname.setBorder(null);
-        Nickname.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NicknameActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(MessageTF, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(SendButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel1)
+                        .addComponent(MessageTF, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Nickname, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                        .addComponent(DisconnectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(SendButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Nickname, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(DisconnectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,28 +130,21 @@ public class FenetreChat extends javax.swing.JPanel {
                             .addComponent(MessageTF, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(SendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1))
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MessageTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MessageTFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MessageTFActionPerformed
-
-    private void NicknameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NicknameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NicknameActionPerformed
-
     private void SendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendButtonActionPerformed
-        if(currentSelectedUser!=null){
+        if(UserList.getSelectedValue()!=null){
             try {
-                gui.send(MessageTF.getText(), currentSelectedUser);
+                gui.send(MessageTF.getText(), UserList.getSelectedValue().toString());
             } catch (IOException ex) {
                 Logger.getLogger(FenetreChat.class.getName()).log(Level.SEVERE, null, ex);
             }
-            HistoricArea.setText(HistoricArea.getText()+"\n"+"to "+currentSelectedUser+" : "+MessageTF.getText());
+            HistoricArea.setText(HistoricArea.getText()+"\n"+"to "+UserList.getSelectedValue().toString()+" : "+MessageTF.getText());
         }
         MessageTF.setText(null);
+        System.out.println(model);
     }//GEN-LAST:event_SendButtonActionPerformed
 
     private void DisconnectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DisconnectButtonActionPerformed
@@ -185,21 +155,6 @@ public class FenetreChat extends javax.swing.JPanel {
             Logger.getLogger(FenetreChat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_DisconnectButtonActionPerformed
-
-    private void UserListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserListMouseClicked
-        int index=UserList.locationToIndex(evt.getPoint());
-        /*if (UserList.isSelectedIndex(index)) {
-            currentSelectedUser=null;
-            UserList.clearSelection();
-        }
-        else {*/
-            currentSelectedUser=model.get(index).toString();
-        
-    }//GEN-LAST:event_UserListMouseClicked
-
-    private void UserListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserListMousePressed
-        
-    }//GEN-LAST:event_UserListMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

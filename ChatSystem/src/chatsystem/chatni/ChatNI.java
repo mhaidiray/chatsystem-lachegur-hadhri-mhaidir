@@ -37,6 +37,7 @@ public class ChatNI {
 
     public void closeSocket() {
         sock.close();
+        sock=null;
     }
     
     public ChatNI() throws SocketException{

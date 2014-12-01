@@ -33,9 +33,6 @@ public class ChatGUI extends JFrame implements Runnable  {
     
     public void switchView() {//go from accueil to chatfenetre
         principale.nickname(local_nickname());
-        updateList("hmida");
-        updateList("hammouda");
-        updateList("hammoudaaaaaaa");
         this.setSize(principale.getPreferredSize());
         this.setContentPane(principale);
         this.setVisible(true);
@@ -75,8 +72,8 @@ public class ChatGUI extends JFrame implements Runnable  {
         this.control.processSend(nickname,msg,0);
     }
     
-    public void updateList(String nickname){
-        principale.updateList(nickname);
+    public void updateList(String nickname,boolean x){
+        principale.updateList(nickname,x);
     }
     
     public void addMsgtoHistory(String msg,String sender) {

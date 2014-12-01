@@ -60,7 +60,8 @@ public class UDPReceiver implements Runnable{
                 AbstractMessage aMessage = (AbstractMessage) in.readObject();
                 String nickn=extractNickname(aMessage.getNickname());
                 InetAddress remoteip=extractIp(aMessage.getNickname());
-                if (!(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress()).equals(aMessage.getNickname())){
+                //désactiver les messages envoyés à soi-même=> enlever le "true||" ci-bas
+                if (true||!(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress()).equals(aMessage.getNickname())){
 
                     if (aMessage.getTypeContenu() == typeContenu.HELLO){
                             Hello helloSerialise = (Hello) aMessage;

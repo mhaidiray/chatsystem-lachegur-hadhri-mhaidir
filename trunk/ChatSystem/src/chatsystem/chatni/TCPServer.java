@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author Machd
  */
-public class TCPServer implements Runnable{
+public class TCPServer extends Thread{
     private ChatNI ni;
     private ServerSocket serv;
     private boolean stop;
@@ -36,12 +36,12 @@ public class TCPServer implements Runnable{
         this.stop=false;
     }
     
-    public void close() {
-        this.stop=true;
+    public void close() throws IOException {
+        this.serv.close();
     }
     @Override
     public void run() {
-        while(true||!stop) {
+        while(true) {
         Socket sock=null;
         try {
             sock=serv.accept();
@@ -58,14 +58,6 @@ public class TCPServer implements Runnable{
         
         }
         
-        //procédure de fermeture de la classe et du socket
-        
-        try {
-            this.serv.close();
-        } catch (IOException ex) {
-            Logger.getLogger(TCPServer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Thread.currentThread().interrupt();
     }
     
 }

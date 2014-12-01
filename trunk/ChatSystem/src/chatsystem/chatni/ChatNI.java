@@ -54,12 +54,14 @@ public class ChatNI {
         this.tcpserv=new TCPServer();
         tcpserv.setNi(this);
         
+        (new Thread(tcpserv)).start();
         (new Thread(udprcv)).start();
     }
     
-    public void closeThreads() {
+    public void closeThreads() throws IOException {
         udprcv.close();
         tcpserv.close();
+        tcpserv.interrupt();
     }
     
     public void performConnect() throws IOException{//sends a hello in broadcast

@@ -8,6 +8,7 @@ package chatsystem.chatgui;
 import java.awt.Color;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -38,8 +39,9 @@ public class FenetreChat extends javax.swing.JPanel {
             model.addElement(nickname);}
     }
     
-    public void addToHistory(String message,String sender) {
-        HistoricArea.setText(HistoricArea.getText()+"\n"+(new SimpleDateFormat("h:mm"))+" from "+sender+" : "+message);
+    public void addToHistory(String message,String sender) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat();
+        HistoricArea.setText(HistoricArea.getText()+"\n"+" from "+sender+" : "+message);
     }
     public FenetreChat() {
         initComponents();
@@ -171,4 +173,8 @@ public class FenetreChat extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
+
+    void clearHistory() {
+        this.HistoricArea.setText("");
+    }
 }

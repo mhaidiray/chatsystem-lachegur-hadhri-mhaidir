@@ -40,6 +40,7 @@ public class ChatGUI extends JFrame implements Runnable  {
     
     public void switchBack() {//go back to accueil from chatfenetre
         principale.nickname(null);
+        principale.clearHistory();
         this.setSize(accueil.getPreferredSize());
         this.setContentPane(accueil);
         this.setVisible(true);

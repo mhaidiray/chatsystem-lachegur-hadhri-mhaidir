@@ -19,6 +19,7 @@ public class ChatNI {
     }
     private UDPSender udpsend;
     private UDPReceiver udprcv;
+    private TCPServer tcpserv;
     private ChatController control;
 
     public void setControl(ChatController control) {
@@ -40,25 +41,25 @@ public class ChatNI {
         sock=null;
     }
     
-    public ChatNI() throws SocketException{
+    public ChatNI() throws SocketException, IOException{
         DatagramSocket socket=new DatagramSocket(9876);
         socket.setBroadcast(true);
         sock=socket;
-        UDPSender sender=new UDPSender(socket);
-        UDPReceiver receiver=new UDPReceiver(socket);
+        this.udprcv=new UDPReceiver(socket);
+        this.udpsend=new UDPSender(socket);
         
-        this.udprcv=receiver;
-        this.udpsend=sender;
+        udprcv.setNi(this);
+        udpsend.setNi(this);
         
-        receiver.setNi(this);
-        sender.setNi(this);
+        this.tcpserv=new TCPServer();
+        tcpserv.setNi(this);
         
-        (new Thread(receiver)).start();
+        (new Thread(udprcv)).start();
     }
     
     public void closeThreads() {
         udprcv.close();
-        //TODO : close thread of tcp instances
+        tcpserv.close();
     }
     
     public void performConnect() throws IOException{//sends a hello in broadcast

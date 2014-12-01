@@ -6,6 +6,7 @@
 package chatsystem.chatgui;
 
 import java.awt.Color;
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -42,7 +43,7 @@ public class FenetreChat extends javax.swing.JPanel {
     public void addToHistory(String message,String sender) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         Date date = new Date();
-        HistoricArea.setText(HistoricArea.getText()+"\n"+ dateFormat.format(date)+ " from "+sender+" : "+message);
+        HistoricArea.setText(HistoricArea.getText()+"\n "+ dateFormat.format(date)+ " from "+sender+" : "+message);
     }
     public FenetreChat() {
         initComponents();
@@ -68,6 +69,7 @@ public class FenetreChat extends javax.swing.JPanel {
         SendButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         Nickname = new javax.swing.JTextField();
+        AddFile = new javax.swing.JButton();
 
         jScrollPane1.setViewportView(UserList);
 
@@ -95,6 +97,13 @@ public class FenetreChat extends javax.swing.JPanel {
         Nickname.setBackground(new java.awt.Color(242, 242, 242));
         Nickname.setBorder(null);
 
+        AddFile.setText("Add File");
+        AddFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddFileActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -106,7 +115,9 @@ public class FenetreChat extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(MessageTF, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(SendButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(SendButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(AddFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -132,11 +143,14 @@ public class FenetreChat extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(MessageTF, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(SendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(SendButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(AddFile))))
                     .addComponent(jScrollPane1))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -149,7 +163,7 @@ public class FenetreChat extends javax.swing.JPanel {
             }
             SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
             Date date= new Date();
-            HistoricArea.setText(HistoricArea.getText()+"\n"+dateFormat.format(date)+" to "+UserList.getSelectedValue().toString()+" : "+MessageTF.getText());
+            HistoricArea.setText(HistoricArea.getText()+"\n "+dateFormat.format(date)+" to "+UserList.getSelectedValue().toString()+" : "+MessageTF.getText());
         }
         MessageTF.setText(null);
     }//GEN-LAST:event_SendButtonActionPerformed
@@ -162,8 +176,16 @@ public class FenetreChat extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_DisconnectButtonActionPerformed
 
+    private void AddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddFileActionPerformed
+        // TODO add your handling code here:
+        FileSelection fs=new FileSelection();
+        fs.setVisible(true);
+   
+    }//GEN-LAST:event_AddFileActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AddFile;
     private javax.swing.JButton DisconnectButton;
     private javax.swing.JTextArea HistoricArea;
     private javax.swing.JTextField MessageTF;

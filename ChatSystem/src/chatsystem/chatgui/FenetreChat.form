@@ -23,7 +23,10 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="MessageTF" min="-2" pref="359" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="SendButton" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="SendButton" max="32767" attributes="0"/>
+                          <Component id="AddFile" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -55,14 +58,18 @@
                   <Group type="102" attributes="0">
                       <Component id="jScrollPane2" min="-2" pref="245" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="MessageTF" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
-                          <Component id="SendButton" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="MessageTF" min="-2" pref="51" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="SendButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="AddFile" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="40" max="32767" attributes="0"/>
+              <EmptySpace pref="39" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -132,6 +139,14 @@
           <Border info="null"/>
         </Property>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="AddFile">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Add File"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddFileActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

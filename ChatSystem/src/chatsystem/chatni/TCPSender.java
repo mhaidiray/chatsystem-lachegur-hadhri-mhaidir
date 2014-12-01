@@ -5,10 +5,21 @@
  */
 package chatsystem.chatni;
 
+import java.io.File;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 /**
  *
  * @author Machd
  */
-public class TCPSender {
-    
+public class TCPSender extends Thread {
+    private File file;
+    private Socket sock;
+    private ServerSocket srv;
+    public TCPSender(File f,Socket sock,ServerSocket srv){
+        this.srv=srv;
+        this.sock=sock;
+        this.file=f;
+    }
 }

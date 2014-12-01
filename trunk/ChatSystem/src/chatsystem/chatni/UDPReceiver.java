@@ -14,6 +14,7 @@ import Signals.*;
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.text.ParseException;
 /**
  *
  * @author Machd
@@ -91,6 +92,8 @@ public class UDPReceiver implements Runnable{
         } catch (IOException ex) {
             Logger.getLogger(UDPReceiver.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UDPReceiver.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(UDPReceiver.class.getName()).log(Level.SEVERE, null, ex);
         }
         Thread.currentThread().interrupt();

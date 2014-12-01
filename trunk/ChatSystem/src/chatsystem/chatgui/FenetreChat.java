@@ -40,7 +40,7 @@ public class FenetreChat extends javax.swing.JPanel {
     }
     
     public void addToHistory(String message,String sender) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm a");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         Date date = new Date();
         HistoricArea.setText(HistoricArea.getText()+"\n"+ dateFormat.format(date)+ " from "+sender+" : "+message);
     }
@@ -147,10 +147,11 @@ public class FenetreChat extends javax.swing.JPanel {
             } catch (IOException ex) {
                 Logger.getLogger(FenetreChat.class.getName()).log(Level.SEVERE, null, ex);
             }
-            HistoricArea.setText(HistoricArea.getText()+"\n"+"to "+UserList.getSelectedValue().toString()+" : "+MessageTF.getText());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+            Date date= new Date();
+            HistoricArea.setText(HistoricArea.getText()+"\n"+dateFormat.format(date)+" to "+UserList.getSelectedValue().toString()+" : "+MessageTF.getText());
         }
         MessageTF.setText(null);
-        System.out.println(model);
     }//GEN-LAST:event_SendButtonActionPerformed
 
     private void DisconnectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DisconnectButtonActionPerformed
@@ -158,7 +159,6 @@ public class FenetreChat extends javax.swing.JPanel {
         try {
             gui.disconnect();
         } catch (IOException ex) {
-            Logger.getLogger(FenetreChat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_DisconnectButtonActionPerformed
 

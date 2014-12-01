@@ -9,6 +9,7 @@ import chatsystem.chatni.ChatNI;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -79,7 +80,7 @@ public class ChatController {
         }
     }
     
-    public void notify(String nickn,String message,int conv){//called by NI
+    public void notify(String nickn,String message,int conv) throws ParseException{//called by NI
         gui.addMsgtoHistory(message, nickn);
     }
     

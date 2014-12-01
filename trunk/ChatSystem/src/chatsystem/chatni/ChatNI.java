@@ -7,6 +7,7 @@ package chatsystem.chatni;
 import chatsystem.ChatController;
 import java.io.IOException;
 import java.net.*;
+import java.text.ParseException;
 
 /**
  *
@@ -91,7 +92,7 @@ public class ChatNI {
         udpsend.sendMsg(ip, message);
     }
     
-    public void processMsg(String nickn,String message,int conv){
+    public void processMsg(String nickn,String message,int conv) throws ParseException{
         //écrire le message dans l'historique
         control.notify(nickn,message,conv);
     }

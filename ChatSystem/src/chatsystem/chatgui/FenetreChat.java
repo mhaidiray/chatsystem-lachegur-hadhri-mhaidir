@@ -12,9 +12,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -22,6 +24,7 @@ import javax.swing.DefaultListModel;
  */
 public class FenetreChat extends javax.swing.JPanel {
     private ChatGUI gui;
+    HashMap<String, String> histoMap = new HashMap<String, String>();
     public void setGui(ChatGUI gui) {
         this.gui = gui;
     }
@@ -35,20 +38,26 @@ public class FenetreChat extends javax.swing.JPanel {
     DefaultListModel model;
     public void updateList(String nickname,boolean x){
         if (!x&&model.contains(nickname)) {
-            model.removeElement(nickname);}
+            model.removeElement(nickname);
+            histoMap.remove(nickname);
+        }
         else if (x&&!model.contains(nickname)){
-            model.addElement(nickname);}
+            model.addElement(nickname);
+            histoMap.put(nickname,"Talking to "+nickname);
+        }
     }
     
     public void addToHistory(String message,String sender) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         Date date = new Date();
-        HistoricArea.setText(HistoricArea.getText()+"\n "+ dateFormat.format(date)+ " from "+sender+" : "+message);
+        histoMap.replace(sender, (histoMap.get(sender)+"\n "+ dateFormat.format(date)+ " from "+sender+" : "+message));
+                
     }
     public FenetreChat() {
         initComponents();
         model=new DefaultListModel();
         UserList.setModel(model);
+        HistoricArea.setText("Hello, choose someone to talk to!");
     }
 
     /**
@@ -71,6 +80,11 @@ public class FenetreChat extends javax.swing.JPanel {
         Nickname = new javax.swing.JTextField();
         AddFile = new javax.swing.JButton();
 
+        UserList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UserListMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(UserList);
 
         DisconnectButton.setText("Disconnect");
@@ -163,7 +177,9 @@ public class FenetreChat extends javax.swing.JPanel {
             }
             SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
             Date date= new Date();
-            HistoricArea.setText(HistoricArea.getText()+"\n "+dateFormat.format(date)+" to "+UserList.getSelectedValue().toString()+" : "+MessageTF.getText());
+            String sender=UserList.getSelectedValue().toString();
+            histoMap.replace(sender, (histoMap.get(sender)+"\n "+ dateFormat.format(date)+ " to "+sender+" : "+ MessageTF.getText()));
+            HistoricArea.setText(histoMap.get(sender));
         }
         MessageTF.setText(null);
     }//GEN-LAST:event_SendButtonActionPerformed
@@ -182,6 +198,13 @@ public class FenetreChat extends javax.swing.JPanel {
         fs.setVisible(true);
    
     }//GEN-LAST:event_AddFileActionPerformed
+
+    private void UserListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserListMouseClicked
+        // TODO add your handling code here:
+        if(UserList.getSelectedValue()!=null){
+            this.HistoricArea.setText(histoMap.get(UserList.getSelectedValue().toString()));
+        }
+    }//GEN-LAST:event_UserListMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

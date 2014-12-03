@@ -49,7 +49,7 @@ public class ChatController {
         this.ni.performConnect();
     }
     
-    public void processDisconnect() throws IOException{
+    public void processDisconnect() throws IOException, InterruptedException{
         int i;
         Set<String> set=users.keySet();
         for (String nickn: set){

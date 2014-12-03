@@ -37,6 +37,8 @@ public class FenetreChat extends javax.swing.JPanel {
     /**
      * Creates new form FenetreChat
      */
+    
+    CellRender cr = new CellRender();
     DefaultListModel model;
     public void updateList(String nickname,boolean x){
         if (!x&&model.contains(nickname)) {
@@ -53,6 +55,7 @@ public class FenetreChat extends javax.swing.JPanel {
         HistoricArea.setText("Hello, choose someone to talk to!");
         histoMap.clear();
         model.clear();
+        cr.clear();
     }
     
     public void updateHistory() {
@@ -63,7 +66,7 @@ public class FenetreChat extends javax.swing.JPanel {
     public void addToHistory(String message,String sender) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         Date date = new Date();
-        histoMap.replace(sender, (histoMap.get(sender)+"\n "+ dateFormat.format(date)+ " from "+sender+" : "+message));
+        histoMap.replace(sender, (histoMap.get(sender)+"\n "+ dateFormat.format(date)+ " "+sender+" : "+message));
         updateHistory();
         notification(sender);
     }
@@ -71,7 +74,8 @@ public class FenetreChat extends javax.swing.JPanel {
     public void notification(String nickname) {
         if (model.contains(nickname)&&(!UserList.getSelectedValue().toString().equals(nickname))) {
             //trouver un meilleur moyen, celui là est trop dur à reverse
-            //model.set(model.indexOf(nickname), "(new) "+nickname);
+            cr.addNotif(model.indexOf(nickname));
+            
         }
     }
     
@@ -80,6 +84,8 @@ public class FenetreChat extends javax.swing.JPanel {
         model=new DefaultListModel();
         UserList.setModel(model);
         initHistory();
+        cr.setList(UserList);
+        UserList.setCellRenderer(cr);
     }
 
     /**
@@ -192,16 +198,17 @@ public class FenetreChat extends javax.swing.JPanel {
 
     private void SendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendButtonActionPerformed
         if(UserList.getSelectedValue()!=null){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+            Date date= new Date();
+            String sender=UserList.getSelectedValue().toString();
+            histoMap.replace(sender, (histoMap.get(sender)+"\n "+ dateFormat.format(date)+" Me : "+ MessageTF.getText()));
+            updateHistory();
             try {
                 gui.send(MessageTF.getText(), UserList.getSelectedValue().toString());
             } catch (IOException ex) {
                 Logger.getLogger(FenetreChat.class.getName()).log(Level.SEVERE, null, ex);
             }
-            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-            Date date= new Date();
-            String sender=UserList.getSelectedValue().toString();
-            histoMap.replace(sender, (histoMap.get(sender)+"\n "+ dateFormat.format(date)+ " to "+sender+" : "+ MessageTF.getText()));
-            updateHistory();
+            
         }
         MessageTF.setText(null);
     }//GEN-LAST:event_SendButtonActionPerformed
@@ -211,6 +218,8 @@ public class FenetreChat extends javax.swing.JPanel {
         try {
             gui.disconnect();
         } catch (IOException ex) {
+        } catch (InterruptedException ex) {
+            Logger.getLogger(FenetreChat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_DisconnectButtonActionPerformed
 
@@ -221,10 +230,11 @@ public class FenetreChat extends javax.swing.JPanel {
     }//GEN-LAST:event_AddFileActionPerformed
 
     private void UserListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserListMouseClicked
-        // TODO add your handling code here:
+         
         if(UserList.getSelectedValue()!=null){
             this.HistoricArea.setText(histoMap.get(UserList.getSelectedValue().toString()));
         }
+        cr.deNotif(model.indexOf(UserList.getSelectedValue().toString()));
     }//GEN-LAST:event_UserListMouseClicked
 
 

@@ -71,7 +71,7 @@ public class ChatGUI extends JFrame implements Runnable  {
         this.control.processConnect(nickname);
     }
     
-    public void disconnect() throws IOException {
+    public void disconnect() throws IOException, InterruptedException {
         this.control.processDisconnect();
     }
     

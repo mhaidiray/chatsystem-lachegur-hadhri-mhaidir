@@ -5,12 +5,17 @@
  */
 package chatsystem.chatni;
 
+import chatsystem.Signals.TextMessage;
+import chatsystem.Signals.Hello;
+import chatsystem.Signals.Goodbye;
+import chatsystem.Signals.typeContenu;
+import chatsystem.Signals.AbstractMessage;
+import chatsystem.Signals.HelloAck;
 import chatsystem.chatni.ChatNI;
 import java.io.IOException;
 import java.net.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import Signals.*;
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;

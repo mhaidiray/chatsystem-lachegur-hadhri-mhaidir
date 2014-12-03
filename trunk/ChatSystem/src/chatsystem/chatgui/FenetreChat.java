@@ -6,6 +6,8 @@
 package chatsystem.chatgui;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -47,17 +49,37 @@ public class FenetreChat extends javax.swing.JPanel {
         }
     }
     
+    public void initHistory() {
+        HistoricArea.setText("Hello, choose someone to talk to!");
+        histoMap.clear();
+        model.clear();
+    }
+    
+    public void updateHistory() {
+        HistoricArea.setText(histoMap.get(UserList.getSelectedValue().toString()));
+        HistoricArea.setCaretPosition(HistoricArea.getText().length() -1);
+    }
+    
     public void addToHistory(String message,String sender) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         Date date = new Date();
         histoMap.replace(sender, (histoMap.get(sender)+"\n "+ dateFormat.format(date)+ " from "+sender+" : "+message));
-                
+        updateHistory();
+        notification(sender);
     }
+    
+    public void notification(String nickname) {
+        if (model.contains(nickname)&&(!UserList.getSelectedValue().toString().equals(nickname))) {
+            //trouver un meilleur moyen, celui là est trop dur à reverse
+            //model.set(model.indexOf(nickname), "(new) "+nickname);
+        }
+    }
+    
     public FenetreChat() {
         initComponents();
         model=new DefaultListModel();
         UserList.setModel(model);
-        HistoricArea.setText("Hello, choose someone to talk to!");
+        initHistory();
     }
 
     /**
@@ -179,7 +201,7 @@ public class FenetreChat extends javax.swing.JPanel {
             Date date= new Date();
             String sender=UserList.getSelectedValue().toString();
             histoMap.replace(sender, (histoMap.get(sender)+"\n "+ dateFormat.format(date)+ " to "+sender+" : "+ MessageTF.getText()));
-            HistoricArea.setText(histoMap.get(sender));
+            updateHistory();
         }
         MessageTF.setText(null);
     }//GEN-LAST:event_SendButtonActionPerformed
@@ -196,7 +218,6 @@ public class FenetreChat extends javax.swing.JPanel {
         // TODO add your handling code here:
         FileSelection fs=new FileSelection();
         fs.setVisible(true);
-   
     }//GEN-LAST:event_AddFileActionPerformed
 
     private void UserListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserListMouseClicked
@@ -220,7 +241,4 @@ public class FenetreChat extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 
-    void clearHistory() {
-        this.HistoricArea.setText("");
-    }
 }

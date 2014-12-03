@@ -59,10 +59,10 @@ public class ChatNI {
         (new Thread(udprcv)).start();
     }
     
-    public void closeThreads() throws IOException {
+    public void closeThreads() throws IOException, InterruptedException {
         udprcv.close();
-        tcpserv.close();
         tcpserv.interrupt();
+        tcpserv.close();
     }
     
     public void performConnect() throws IOException{//sends a hello in broadcast

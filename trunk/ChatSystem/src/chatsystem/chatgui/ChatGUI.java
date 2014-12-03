@@ -7,6 +7,8 @@ package chatsystem.chatgui;
 import chatsystem.ChatController;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -34,6 +36,9 @@ public class ChatGUI extends JFrame implements Runnable  {
     
     public void switchView() {//go from accueil to chatfenetre
         principale.nickname(local_nickname());
+        principale.updateList("frfr",true);
+        principale.updateList("enen",true);
+        principale.updateList("arar",true);
         this.setSize(principale.getPreferredSize());
         this.setContentPane(principale);
         this.setVisible(true);
@@ -41,7 +46,7 @@ public class ChatGUI extends JFrame implements Runnable  {
     
     public void switchBack() {//go back to accueil from chatfenetre
         principale.nickname(null);
-        principale.clearHistory();
+        principale.initHistory();
         this.setSize(accueil.getPreferredSize());
         this.setContentPane(accueil);
         this.setVisible(true);

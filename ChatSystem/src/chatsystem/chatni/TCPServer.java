@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 public class TCPServer extends Thread{
     private ChatNI ni;
     private ServerSocket serv;
-    private boolean stop;
     public void setNi(ChatNI ni) {
         this.ni = ni;
     }
@@ -33,27 +32,32 @@ public class TCPServer extends Thread{
     
     public TCPServer() throws IOException{
         serv=new ServerSocket(6789);
-        this.stop=false;
     }
     
     public void close() throws IOException {
         this.serv.close();
     }
+    
     @Override
     public void run() {
         while(true) {
-        Socket sock=null;
-        try {
-            sock=serv.accept();
-        } catch (IOException ex) {
-            Logger.getLogger(TCPServer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        FileInputStream fis = null;
-        BufferedInputStream bis = null;
-        OutputStream os = null;
-        InetAddress ip=sock.getInetAddress();
-        //TODO : réception du fichier
-        
+            Socket sock=null;
+            try {
+                if(!serv.isClosed()){
+                    sock=serv.accept();
+                }
+            } catch (IOException ex) {
+                //Logger.getLogger(TCPServer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                if (sock!=null){
+                FileInputStream fis = null;
+                BufferedInputStream bis = null;
+                OutputStream os = null;
+                InetAddress ip=sock.getInetAddress();
+                //TODO : réception/envoi du fichier
+
+
+            }
         
         
         }

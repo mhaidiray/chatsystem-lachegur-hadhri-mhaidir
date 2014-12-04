@@ -36,6 +36,7 @@ public class ChatGUI extends JFrame implements Runnable  {
     
     public void switchView() {//go from accueil to chatfenetre
         principale.nickname(local_nickname());
+        principale.updateList("frfr",true);
         this.setSize(principale.getPreferredSize());
         this.setContentPane(principale);
         this.setVisible(true);

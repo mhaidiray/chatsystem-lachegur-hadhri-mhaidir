@@ -66,7 +66,9 @@ public class FenetreChat extends javax.swing.JPanel {
     public void addToHistory(String message,String sender) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         Date date = new Date();
-        histoMap.replace(sender, (histoMap.get(sender)+"\n "+ dateFormat.format(date)+ " "+sender+" : "+message));
+        String text=(histoMap.get(sender)+"\n "+ dateFormat.format(date)+" "+sender+" : "+ message);
+        histoMap.put(sender, text);
+        //histoMap.replace(sender, (histoMap.get(sender)+"\n "+ dateFormat.format(date)+ " "+sender+" : "+message));
         updateHistory();
         notification(sender);
     }
@@ -201,7 +203,9 @@ public class FenetreChat extends javax.swing.JPanel {
             SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
             Date date= new Date();
             String sender=UserList.getSelectedValue().toString();
-            histoMap.replace(sender, (histoMap.get(sender)+"\n "+ dateFormat.format(date)+" Me : "+ MessageTF.getText()));
+            String text=(histoMap.get(sender)+"\n "+ dateFormat.format(date)+" Me : "+ MessageTF.getText());
+            histoMap.put(sender, text);
+            //histoMap.replace(sender, (histoMap.get(sender)+"\n "+ dateFormat.format(date)+" Me : "+ MessageTF.getText()));
             updateHistory();
             try {
                 gui.send(MessageTF.getText(), UserList.getSelectedValue().toString());
@@ -234,7 +238,7 @@ public class FenetreChat extends javax.swing.JPanel {
         if(UserList.getSelectedValue()!=null){
             this.HistoricArea.setText(histoMap.get(UserList.getSelectedValue().toString()));
         }
-        cr.deNotif(model.indexOf(UserList.getSelectedValue().toString()));
+        //cr.deNotif(model.indexOf(UserList.getSelectedValue().toString()));
     }//GEN-LAST:event_UserListMouseClicked
 
 

@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 package chatsystem.chatni;
-import chatsystem.Signals.TextMessage;
-import chatsystem.Signals.Hello;
-import chatsystem.Signals.Goodbye;
-import chatsystem.Signals.HelloAck;
+import Signals.TextMessage;
+import Signals.Hello;
+import Signals.Goodbye;
+import Signals.HelloAck;
 import chatsystem.chatni.ChatNI;
 import java.io.IOException;
 import java.net.*;

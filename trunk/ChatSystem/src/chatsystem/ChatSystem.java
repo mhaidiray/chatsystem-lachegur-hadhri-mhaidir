@@ -3,8 +3,10 @@
  * and open the template in the editor.
  */
 package chatsystem;
+import Signals.FileMessage;
 import chatsystem.chatgui.ChatGUI;
 import chatsystem.chatni.ChatNI;
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 

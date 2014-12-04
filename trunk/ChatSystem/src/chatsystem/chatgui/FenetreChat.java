@@ -59,8 +59,10 @@ public class FenetreChat extends javax.swing.JPanel {
     }
     
     public void updateHistory() {
-        HistoricArea.setText(histoMap.get(UserList.getSelectedValue().toString()));
-        HistoricArea.setCaretPosition(HistoricArea.getText().length() -1);
+        if (!UserList.isSelectionEmpty()) {
+            HistoricArea.setText(histoMap.get(UserList.getSelectedValue().toString()));
+            HistoricArea.setCaretPosition(HistoricArea.getText().length() -1);
+        }
     }
     
     public void addToHistory(String message,String sender) throws ParseException {
@@ -71,13 +73,19 @@ public class FenetreChat extends javax.swing.JPanel {
         //histoMap.replace(sender, (histoMap.get(sender)+"\n "+ dateFormat.format(date)+ " "+sender+" : "+message));
         updateHistory();
         notification(sender);
+        UserList.repaint();
     }
     
     public void notification(String nickname) {
-        if (model.contains(nickname)&&(!UserList.getSelectedValue().toString().equals(nickname))) {
-            //trouver un meilleur moyen, celui là est trop dur à reverse
-            cr.addNotif(model.indexOf(nickname));
-            
+        if (!UserList.isSelectionEmpty()) {
+            if (model.contains(nickname)&&(!UserList.getSelectedValue().toString().equals(nickname))) {
+                cr.addNotif(model.indexOf(nickname));
+            }
+        }
+        else {
+            if (model.contains(nickname)) {
+                cr.addNotif(model.indexOf(nickname));
+            }
         }
     }
     
@@ -228,9 +236,14 @@ public class FenetreChat extends javax.swing.JPanel {
     }//GEN-LAST:event_DisconnectButtonActionPerformed
 
     private void AddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddFileActionPerformed
-        // TODO add your handling code here:
-        FileSelection fs=new FileSelection();
-        fs.setVisible(true);
+        try {
+            // TODO add your handling code here:
+            //FileSelection fs=new FileSelection();
+            //fs.setVisible(true);
+            addToHistory("heyheyhey", "frfr");
+        } catch (ParseException ex) {
+            Logger.getLogger(FenetreChat.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_AddFileActionPerformed
 
     private void UserListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserListMouseClicked
@@ -238,7 +251,8 @@ public class FenetreChat extends javax.swing.JPanel {
         if(UserList.getSelectedValue()!=null){
             this.HistoricArea.setText(histoMap.get(UserList.getSelectedValue().toString()));
         }
-        //cr.deNotif(model.indexOf(UserList.getSelectedValue().toString()));
+        cr.deNotif(model.indexOf(UserList.getSelectedValue().toString()));
+        UserList.repaint();
     }//GEN-LAST:event_UserListMouseClicked
 
 

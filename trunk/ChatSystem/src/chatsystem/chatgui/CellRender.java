@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -27,10 +28,14 @@ public class CellRender extends JLabel implements ListCellRenderer {
         setOpaque(true);
     }
 
-    private  ArrayList<Integer> usersNotif=new ArrayList<Integer>();
+    private  HashMap<Integer,Integer> usersNotif=new HashMap<Integer,Integer>();
     
     public void addNotif(int x) {
-        usersNotif.add(x);
+        int aux=1;
+        if (usersNotif.containsKey(x)) {
+            aux=usersNotif.get(x)+1;
+        }
+        usersNotif.put(x,aux);
     }
     
     public void clear(){
@@ -62,13 +67,13 @@ public class CellRender extends JLabel implements ListCellRenderer {
          } else if (isSelected) {
              background = Color.BLUE;
              foreground = Color.WHITE;
-
          // unselected, and not the DnD drop location
          }
-         else if(usersNotif.contains(index)) {
+         else if(usersNotif.containsKey(index)) {
              //setFont(new Font(getFont(),Font.BOLD,getFont().getSize()));
              background = Color.GREEN;
-             foreground = Color.WHITE;
+             foreground = Color.BLACK;
+             setText(value.toString()+" ("+usersNotif.get(index)+")");
          }
          
          else {

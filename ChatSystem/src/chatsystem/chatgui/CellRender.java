@@ -17,7 +17,7 @@ import javax.swing.ListCellRenderer;
  *
  * @author Machd
  */
-public class CellRender extends JLabel implements ListCellRenderer<Object> {
+public class CellRender extends JLabel implements ListCellRenderer {
     private JList list;
 
     public void setList(JList list) {
@@ -38,7 +38,7 @@ public class CellRender extends JLabel implements ListCellRenderer<Object> {
     }
     
     @Override
-    public Component getListCellRendererComponent(JList<?> list,
+    public Component getListCellRendererComponent(JList list,
                                                    Object value,
                                                    int index,
                                                    boolean isSelected,

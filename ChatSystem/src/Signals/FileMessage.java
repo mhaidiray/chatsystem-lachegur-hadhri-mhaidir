@@ -19,9 +19,8 @@ public class FileMessage extends AbstractMessage {
     public FileMessage(String namefile, ArrayList<String> dest, File file){
         this.namefile = namefile;
         this.dest = dest;
+        this.file=file;
         this.fileSize=file.length();
-        String nom=file.getAbsolutePath(); 
-        this.extension=nom.substring(nom.lastIndexOf("."));
     }
         
 

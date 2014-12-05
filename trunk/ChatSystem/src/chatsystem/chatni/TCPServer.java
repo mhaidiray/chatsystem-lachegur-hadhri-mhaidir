@@ -6,8 +6,11 @@
 package chatsystem.chatni;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -50,16 +53,9 @@ public class TCPServer extends Thread{
                 //Logger.getLogger(TCPServer.class.getName()).log(Level.SEVERE, null, ex);
             }
                 if (sock!=null){
-                FileInputStream fis = null;
-                BufferedInputStream bis = null;
-                OutputStream os = null;
-                InetAddress ip=sock.getInetAddress();
-                //TODO : réception/envoi du fichier
-
-
-            }
-        
-        
+                    System.out.println("Accepted connection : " + sock);
+                    (new Thread((new TCPReceiver(sock)))).start();
+                }
         }
         
     }

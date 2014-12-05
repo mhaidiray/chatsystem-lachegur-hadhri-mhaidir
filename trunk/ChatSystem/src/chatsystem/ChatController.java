@@ -6,6 +6,7 @@ package chatsystem;
 
 import chatsystem.chatgui.ChatGUI;
 import chatsystem.chatni.ChatNI;
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketException;
@@ -76,13 +77,19 @@ public class ChatController {
         if (users.containsKey(nickname)){
             ni.sendMessageTo(users.get(nickname), message, conv);
         }
+        
+        File f=new File("/home/lachegur/test.txt");
+        processSend(InetAddress.getLocalHost(), f);
+        
     }
     
     public void notify(String nickn,String message,int conv) throws ParseException{//called by NI
         gui.addMsgtoHistory(message, nickn);
     }
     
-    
+    public void processSend(InetAddress ip,File f) {
+        ni.transferFile(ip, f);
+    }
     //public void fileReceived(filepath,remote ip,conv){}//NI
     
     

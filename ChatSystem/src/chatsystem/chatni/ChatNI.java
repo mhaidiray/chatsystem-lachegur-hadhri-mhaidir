@@ -5,6 +5,7 @@
 package chatsystem.chatni;
 
 import chatsystem.ChatController;
+import java.io.File;
 import java.io.IOException;
 import java.net.*;
 import java.text.ParseException;
@@ -97,7 +98,10 @@ public class ChatNI {
         control.notify(nickn,message,conv);
     }
 
-    //public void transferFile(ip,filepath,conv){}
+    public void transferFile(InetAddress ip,File file){
+        TCPSender tcpsend=new TCPSender(ip,file);
+        (new Thread(tcpsend)).start();
+    }
     //public void processFile(filepath, remote ip,conv){}
     
     

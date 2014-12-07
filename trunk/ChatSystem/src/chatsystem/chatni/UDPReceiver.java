@@ -59,7 +59,6 @@ public class UDPReceiver implements Runnable{
             packet=new DatagramPacket(buf,buf.length);
             while (!stop){
                 socket.receive(packet);
-                ByteArrayInputStream bin = null;
                 ObjectInput in = null;
                 ByteArrayInputStream byteIn = new ByteArrayInputStream(packet.getData());
                 in = new ObjectInputStream(byteIn);

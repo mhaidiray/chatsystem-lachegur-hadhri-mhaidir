@@ -44,11 +44,12 @@ public class TCPReceiver extends Thread {
                 InputStream is = null;
                 is = sock.getInputStream();
                 byte[] byteArray=new byte[512];
+                is.read(byteArray);
                 ByteArrayInputStream bin = null;
 		ObjectInput in = null;
                 ByteArrayInputStream byteIn = new ByteArrayInputStream(byteArray);
-                in = new ObjectInputStream(byteIn);
-                AbstractMessage aMessage = (AbstractMessage) in.readObject();
+                ObjectInputStream inp=new ObjectInputStream(byteIn);
+                AbstractMessage aMessage = (AbstractMessage) inp.readObject();
                   
                 FileMessage fmSerialise = (FileMessage) aMessage;
                 System.out.println("C'est un FILEMESSAGE ! " + fmSerialise.getNickname());

@@ -39,7 +39,7 @@ public class TCPSender extends Thread {
     
     public void run() {
         try {
-            FileMessage fm=new FileMessage(file);
+            FileMessage fm=new FileMessage(file.getName(),null,file.length());
             Socket sock = new Socket(remoteip,6789);
             
             //Envoi des infos sur le fichier

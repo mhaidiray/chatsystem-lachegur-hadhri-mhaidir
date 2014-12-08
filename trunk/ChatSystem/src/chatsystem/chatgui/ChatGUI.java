@@ -5,6 +5,7 @@
 package chatsystem.chatgui;
 
 import chatsystem.ChatController;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.logging.Level;
@@ -36,7 +37,6 @@ public class ChatGUI extends JFrame implements Runnable  {
     
     public void switchView() {//go from accueil to chatfenetre
         principale.nickname(local_nickname());
-        principale.updateList("frfr",true);
         this.setSize(principale.getPreferredSize());
         this.setContentPane(principale);
         this.setVisible(true);
@@ -83,5 +83,9 @@ public class ChatGUI extends JFrame implements Runnable  {
     
     public void addMsgtoHistory(String msg,String sender) throws ParseException {
         principale.addToHistory(msg,sender);
+    }
+    
+    public void sendFile(String nickname,File f){
+        control.processSendFile(nickname, f);
     }
 }

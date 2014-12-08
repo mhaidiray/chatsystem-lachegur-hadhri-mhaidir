@@ -70,8 +70,8 @@ public class ChatNI {
        udpsend.sendHello();
     }
     
-    public void disconnectFrom(InetAddress ip) throws IOException{//sends a goodbye to the designed ip
-       udpsend.sendGoodBye(ip);
+    public void disconnect() throws IOException{//sends a goodbye to the designed ip
+       udpsend.sendGoodBye();
     }
     
     public void processHello(String nickname,InetAddress ip) throws IOException{

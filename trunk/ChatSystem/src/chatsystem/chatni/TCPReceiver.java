@@ -38,15 +38,12 @@ public class TCPReceiver extends Thread {
     }
     
     public void run() {
-        byte[] mybytearray = new byte[1024];
         if (sock!=null){
             try {
                 InputStream is = null;
                 is = sock.getInputStream();
                 byte[] byteArray=new byte[512];
                 is.read(byteArray);
-                ByteArrayInputStream bin = null;
-		ObjectInput in = null;
                 ByteArrayInputStream byteIn = new ByteArrayInputStream(byteArray);
                 ObjectInputStream inp=new ObjectInputStream(byteIn);
                 AbstractMessage aMessage = (AbstractMessage) inp.readObject();
@@ -58,10 +55,8 @@ public class TCPReceiver extends Thread {
                 byteArray=new byte[(int)fmSerialise.getSize()];
                   
                 FileOutputStream fos = new FileOutputStream("./ReceivedFiles/"+fmSerialise.getNamefile());
-                BufferedOutputStream bos = new BufferedOutputStream(fos);
-                int bytesRead = is.read(mybytearray, 0, mybytearray.length);
-                bos.write(mybytearray, 0, bytesRead);
-                bos.close();
+                int bytesRead = is.read(byteArray, 0, byteArray.length);
+                fos.write(byteArray, 0, bytesRead);
                 sock.close();
                 is.close();
                 this.interrupt();

@@ -78,17 +78,14 @@ public class ChatController {
             ni.sendMessageTo(users.get(nickname), message, conv);
         }
         
-        File f=new File("/home/lachegur/test.txt");
-        processSend(InetAddress.getLocalHost(), f);
-        
     }
     
     public void notify(String nickn,String message,int conv) throws ParseException{//called by NI
         gui.addMsgtoHistory(message, nickn);
     }
     
-    public void processSend(InetAddress ip,File f) {
-        ni.transferFile(ip, f);
+    public void processSendFile(String nick,File f) {
+        ni.transferFile(users.get(nick), f);
     }
     //public void fileReceived(filepath,remote ip,conv){}//NI
     

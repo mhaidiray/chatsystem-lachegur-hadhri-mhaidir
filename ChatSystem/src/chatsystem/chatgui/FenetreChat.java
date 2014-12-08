@@ -241,14 +241,12 @@ public class FenetreChat extends javax.swing.JPanel {
     }//GEN-LAST:event_DisconnectButtonActionPerformed
 
     private void AddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddFileActionPerformed
-        try {
+            File f=new File("/home/"+Nickname.getText()+"/test.txt");
+            String sender=UserList.getSelectedValue().toString();
+            gui.sendFile(sender, f);
             // TODO add your handling code here:
             //FileSelection fs=new FileSelection();
             //fs.setVisible(true);
-            addToHistory("heyheyhey", "frfr");
-        } catch (ParseException ex) {
-            Logger.getLogger(FenetreChat.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_AddFileActionPerformed
 
     private void UserListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserListMouseClicked

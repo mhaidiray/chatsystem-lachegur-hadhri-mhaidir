@@ -66,13 +66,13 @@ public class UDPSender {
         send(ip,byteArray);
     }
     
-    public void sendGoodBye(InetAddress ip) throws IOException{
+    public void sendGoodBye() throws IOException{
         Goodbye h=new Goodbye(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());//création de l'instance hello
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutput out = new ObjectOutputStream(bos);
         out.writeObject(h);
         byte[] byteArray = bos.toByteArray();
-        send(ip,byteArray);
+        send(InetAddress.getByName("255.255.255.255"),byteArray);
     }
     
     public void sendMsg(InetAddress ip, String msg) throws SocketException, IOException{

@@ -52,10 +52,7 @@ public class ChatController {
     
     public void processDisconnect() throws IOException, InterruptedException{
         int i;
-        Set<String> set=users.keySet();
-        for (String nickn: set){
-            this.ni.disconnectFrom(users.get(nickn));
-        }
+        this.ni.disconnect();
         users.clear();
         ni.closeThreads();
         ni.closeSocket();

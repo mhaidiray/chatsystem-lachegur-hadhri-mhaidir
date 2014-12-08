@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JTextArea;
 
 /**
@@ -246,8 +247,16 @@ public class FenetreChat extends javax.swing.JPanel {
     }//GEN-LAST:event_DisconnectButtonActionPerformed
 
     private void AddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddFileActionPerformed
-           new Thread(new FileSelection(this)).start();
-            
+           JFileChooser jf=new JFileChooser();
+           int returnVal = jf.showOpenDialog(null);
+        if (returnVal ==jf.APPROVE_OPTION) {
+            File file = jf.getSelectedFile();
+            sendFile(file);
+        }
+        else if (returnVal == jf.CANCEL_OPTION) {
+        }
+           //File f=new File("./ReceivedFiles/bottle.png");
+            //sendFile(f);
     }//GEN-LAST:event_AddFileActionPerformed
 
     private void UserListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserListMouseClicked

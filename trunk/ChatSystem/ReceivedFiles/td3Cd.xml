@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE cdtheque SYSTEM "cdtheque.dtd">
+
+<cdtheque date="30 septembre" auteur = "Brassens" >
+  <cd>
+    <titre> Les Bourgeois </titre>
+    <artiste> Brassens </artiste>
+    <style> Variete Française </style>
+  </cd>
+
+
+</cdtheque>

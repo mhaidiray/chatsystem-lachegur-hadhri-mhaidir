@@ -52,7 +52,7 @@ public class TCPReceiver extends Thread {
                 AbstractMessage aMessage = (AbstractMessage) inp.readObject();
                   
                 FileMessage fmSerialise = (FileMessage) aMessage;
-                System.out.println("C'est un FILEMESSAGE ! " + fmSerialise.getNickname());
+                System.out.println("C'est un FILEMESSAGE ! " + fmSerialise.getNamefile());
 		  
                   
                 byteArray=new byte[(int)fmSerialise.getSize()];

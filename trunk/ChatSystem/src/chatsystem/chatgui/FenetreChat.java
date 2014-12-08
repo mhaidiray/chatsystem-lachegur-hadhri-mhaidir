@@ -89,6 +89,11 @@ public class FenetreChat extends javax.swing.JPanel {
         }
     }
     
+    public void sendFile(File f) {
+            String sender=UserList.getSelectedValue().toString();
+            gui.sendFile(sender, f);
+    }
+    
     public FenetreChat() {
         initComponents();
         model=new DefaultListModel();
@@ -241,12 +246,8 @@ public class FenetreChat extends javax.swing.JPanel {
     }//GEN-LAST:event_DisconnectButtonActionPerformed
 
     private void AddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddFileActionPerformed
-            File f=new File("/home/"+Nickname.getText()+"/test.txt");
-            String sender=UserList.getSelectedValue().toString();
-            gui.sendFile(sender, f);
-            // TODO add your handling code here:
-            //FileSelection fs=new FileSelection();
-            //fs.setVisible(true);
+           new Thread(new FileSelection(this)).start();
+            
     }//GEN-LAST:event_AddFileActionPerformed
 
     private void UserListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserListMouseClicked

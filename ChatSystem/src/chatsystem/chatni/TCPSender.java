@@ -58,8 +58,8 @@ public class TCPSender extends Thread {
             
             FileInputStream fis = new FileInputStream(file);
             byte[] mybytearray = new byte[(int)file.length()];
-            fis.read(mybytearray);
-            os.write(mybytearray);
+            int bytesRead = fis.read(mybytearray, 0, mybytearray.length);
+            os.write(mybytearray, 0, bytesRead);
             System.out.println("File sent to " + sock);
             
             bos.close();

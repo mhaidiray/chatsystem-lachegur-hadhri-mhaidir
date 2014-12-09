@@ -247,7 +247,7 @@ public class FenetreChat extends javax.swing.JPanel {
     }//GEN-LAST:event_DisconnectButtonActionPerformed
 
     private void AddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddFileActionPerformed
-           JFileChooser jf=new JFileChooser();
+        JFileChooser jf=new JFileChooser();
            int returnVal = jf.showOpenDialog(null);
         if (returnVal ==jf.APPROVE_OPTION) {
             File file = jf.getSelectedFile();

@@ -49,14 +49,16 @@ public class TCPReceiver extends Thread {
                 AbstractMessage aMessage = (AbstractMessage) inp.readObject();
                   
                 FileMessage fmSerialise = (FileMessage) aMessage;
+                System.out.println(fmSerialise.getFileSize());
                 System.out.println("C'est un FILEMESSAGE ! " + fmSerialise.getNamefile());
-		  
+		
                 byteArray=null;
                 byteArray=new byte[(int)fmSerialise.getSize()];
                   
                 FileOutputStream fos = new FileOutputStream("./ReceivedFiles/"+fmSerialise.getNamefile());
-                int bytesRead = is.read(byteArray, 0, byteArray.length);
-                fos.write(byteArray, 0, bytesRead);
+                int bytesRead = is.read(byteArray);
+                System.out.println(bytesRead);
+                fos.write(byteArray, 0, byteArray.length);
                 sock.close();
                 is.close();
                 this.interrupt();

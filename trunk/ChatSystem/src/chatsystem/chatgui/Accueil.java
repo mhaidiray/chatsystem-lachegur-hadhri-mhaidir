@@ -8,6 +8,7 @@ package chatsystem.chatgui;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 
 /**
  *
@@ -45,9 +46,16 @@ public class Accueil extends javax.swing.JPanel {
         jLabel1.setText("Welcome to our ChatSystem");
 
         ConnectButton.setText("Connect");
+        ConnectButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         ConnectButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ConnectButtonActionPerformed(evt);
+            }
+        });
+
+        NicknameTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NicknameTFActionPerformed(evt);
             }
         });
 
@@ -87,6 +95,7 @@ public class Accueil extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ConnectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConnectButtonActionPerformed
+        
         try {
             this.gui.connect(NicknameTF.getText());
             this.gui.switchView();
@@ -95,6 +104,11 @@ public class Accueil extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_ConnectButtonActionPerformed
 
+    private void NicknameTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NicknameTFActionPerformed
+        // TODO add your handling code here:
+        this.ConnectButton.requestFocus();
+    }//GEN-LAST:event_NicknameTFActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ConnectButton;
@@ -102,4 +116,17 @@ public class Accueil extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
+
+    public JButton getConnectButton() {
+        return ConnectButton;
+    }
+    
+    private void ConnectButtonKeyboardPerformed(java.awt.event.FocusListener evt) {                                                 
+        try {
+            this.gui.connect(NicknameTF.getText());
+            this.gui.switchView();
+        } catch (IOException ex) {
+            Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }           
 }

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -28,6 +29,7 @@ public class ChatGUI extends JFrame implements Runnable  {
         this.principale=new FenetreChat();
         this.accueil=new Accueil();
         this.setTitle("ChatSystem");
+        
         accueil.setGui(this);
         principale.setGui(this);
         this.setSize(accueil.getPreferredSize());

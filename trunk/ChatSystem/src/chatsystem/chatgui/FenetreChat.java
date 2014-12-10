@@ -259,9 +259,16 @@ public class FenetreChat extends javax.swing.JPanel {
         if (returnVal ==jf.APPROVE_OPTION) {
             File file = jf.getSelectedFile();
             sendFile(file);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+            Date date= new Date();
+            String sender=UserList.getSelectedValue().toString();
+            String text=(histoMap.get(sender)+"\n "+ dateFormat.format(date)+" Me : File added : "+ file.getName());
+            histoMap.put(sender, text);
+            updateHistory();
         }
         else if (returnVal == jf.CANCEL_OPTION) {
         }
+        
     }//GEN-LAST:event_AddFileActionPerformed
 
     private void UserListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserListMouseClicked
@@ -281,7 +288,6 @@ public class FenetreChat extends javax.swing.JPanel {
             String sender=UserList.getSelectedValue().toString();
             String text=(histoMap.get(sender)+"\n "+ dateFormat.format(date)+" Me : "+ MessageTF.getText());
             histoMap.put(sender, text);
-            //histoMap.replace(sender, (histoMap.get(sender)+"\n "+ dateFormat.format(date)+" Me : "+ MessageTF.getText()));
             updateHistory();
             try {
                 gui.send(MessageTF.getText(), UserList.getSelectedValue().toString());

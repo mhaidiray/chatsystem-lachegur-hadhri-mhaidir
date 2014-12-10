@@ -98,8 +98,8 @@ public class ChatNI {
         control.notify(nickn,message,conv);
     }
 
-    public void transferFile(InetAddress ip,File file){
-        TCPSender tcpsend=new TCPSender(ip,file,this);
+    public void transferFile(InetAddress ip,File file,String nick){
+        TCPSender tcpsend=new TCPSender(ip,file,this,nick);
         (new Thread(tcpsend)).start();
     }
     //public void processFile(filepath, remote ip,conv){}

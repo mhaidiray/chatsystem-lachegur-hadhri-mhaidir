@@ -8,6 +8,7 @@ package chatsystem.chatgui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -145,6 +146,12 @@ public class FenetreChat extends javax.swing.JPanel {
         HistoricArea.setRows(5);
         jScrollPane2.setViewportView(HistoricArea);
 
+        MessageTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MessageTFActionPerformed(evt);
+            }
+        });
+
         SendButton.setText("Send");
         SendButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -255,8 +262,6 @@ public class FenetreChat extends javax.swing.JPanel {
         }
         else if (returnVal == jf.CANCEL_OPTION) {
         }
-           //File f=new File("./ReceivedFiles/bottle.png");
-            //sendFile(f);
     }//GEN-LAST:event_AddFileActionPerformed
 
     private void UserListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserListMouseClicked
@@ -267,6 +272,27 @@ public class FenetreChat extends javax.swing.JPanel {
         cr.deNotif(model.indexOf(UserList.getSelectedValue().toString()));
         UserList.repaint();
     }//GEN-LAST:event_UserListMouseClicked
+
+    private void MessageTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MessageTFActionPerformed
+        // TODO add your handling code here:
+            if(UserList.getSelectedValue()!=null){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+            Date date= new Date();
+            String sender=UserList.getSelectedValue().toString();
+            String text=(histoMap.get(sender)+"\n "+ dateFormat.format(date)+" Me : "+ MessageTF.getText());
+            histoMap.put(sender, text);
+            //histoMap.replace(sender, (histoMap.get(sender)+"\n "+ dateFormat.format(date)+" Me : "+ MessageTF.getText()));
+            updateHistory();
+            try {
+                gui.send(MessageTF.getText(), UserList.getSelectedValue().toString());
+            } catch (IOException ex) {
+                Logger.getLogger(FenetreChat.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        MessageTF.setText(null);
+        
+    }//GEN-LAST:event_MessageTFActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

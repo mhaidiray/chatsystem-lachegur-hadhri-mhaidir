@@ -5,6 +5,7 @@
  */
 package chatsystem.chatgui;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -106,7 +107,12 @@ public class Accueil extends javax.swing.JPanel {
 
     private void NicknameTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NicknameTFActionPerformed
         // TODO add your handling code here:
-        this.ConnectButton.requestFocus();
+            try {
+            this.gui.connect(NicknameTF.getText());
+            this.gui.switchView();
+        } catch (IOException ex) {
+            Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_NicknameTFActionPerformed
 
 

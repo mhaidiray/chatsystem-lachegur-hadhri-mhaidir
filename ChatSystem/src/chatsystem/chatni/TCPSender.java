@@ -33,21 +33,23 @@ import java.util.logging.Logger;
 public class TCPSender extends Thread {
     private File file;
     private InetAddress remoteip;
+    private String remotenick;
     private ChatNI ni;
-    public TCPSender(InetAddress ip,File f,ChatNI ni){
+    public TCPSender(InetAddress ip,File f,ChatNI ni,String nick){
         this.file=f;
         this.remoteip=ip;
         this.ni=ni;
+        this.remotenick=nick;
     }
     
     public void run() {
         try {
             ArrayList<String> dest=new ArrayList<String>();
-            dest.add("ju");
+            dest.add(remotenick+"@"+remoteip.getHostAddress());
             FileMessage fm=new FileMessage(file.getName(),dest,file.length());
-            fm.setNickname(ni.local_nickname());
+            fm.setNickname(ni.local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());
             Socket sock = new Socket(remoteip,6789);
-            
+            System.out.println(dest);
             //Envoi des infos sur le fichier
             
             ByteArrayOutputStream bos = new ByteArrayOutputStream();

@@ -24,6 +24,8 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,14 +34,26 @@ import java.util.logging.Logger;
  * @author Machd
  */
 public class TCPReceiver extends Thread {
+    private ChatNI ni;
     private Socket sock;
-    public TCPReceiver(Socket sock) {
+    public TCPReceiver(Socket sock,ChatNI ni) {
         this.sock=sock;
+        this.ni=ni;
+    }
+    
+    public String extractNickname(String nick){
+        return nick.substring(0,nick.indexOf('@'));
+    }
+    
+    public InetAddress extractIp(String nick) throws UnknownHostException{
+        String aux=nick.substring(nick.indexOf('@')+1);
+        return InetAddress.getByName(aux);
     }
     
     public void run() {
         if (sock!=null){
             try {
+                // RECEPTION DU FILEMESSAGE
                 InputStream is = sock.getInputStream();
                 byte[] byteArray=new byte[512];
                 is.read(byteArray);
@@ -49,21 +63,27 @@ public class TCPReceiver extends Thread {
                   
                 FileMessage fmSerialise = (FileMessage) aMessage;
                 System.out.println("C'est un FILEMESSAGE ! " + fmSerialise.getNamefile());
-		
+                
+		ni.processMsg(extractNickname(fmSerialise.getNickname()), ("File added : "+fmSerialise.getNamefile()), 0);
+                
+                //RECEPTION DU FILE
                 byteArray=null;
                 byteArray=new byte[(int)fmSerialise.getSize()]; 
                 FileOutputStream fos = new FileOutputStream("./ReceivedFiles/"+fmSerialise.getNamefile());
                 int bytesRead;
                 while((bytesRead=is.read(byteArray, 0,byteArray.length))!=-1){
-                fos.write(byteArray,0,bytesRead);
+                    fos.write(byteArray,0,bytesRead);
                 }
                 
                 sock.close();
                 is.close();
                 this.interrupt();
+                        
             } catch (IOException ex) {
                 Logger.getLogger(TCPReceiver.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TCPReceiver.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
                 Logger.getLogger(TCPReceiver.class.getName()).log(Level.SEVERE, null, ex);
             } 
     }

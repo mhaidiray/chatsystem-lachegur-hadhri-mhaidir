@@ -54,7 +54,7 @@ public class TCPServer extends Thread{
             }
                 if (sock!=null){
                     System.out.println("Accepted connection : " + sock);
-                    (new Thread((new TCPReceiver(sock)))).start();
+                    (new Thread((new TCPReceiver(sock,ni)))).start();
                 }
         }
         

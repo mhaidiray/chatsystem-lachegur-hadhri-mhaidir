@@ -82,9 +82,8 @@ public class ChatController {
     }
     
     public void processSendFile(String nick,File f) {
-        ni.transferFile(users.get(nick), f);
+        ni.transferFile(users.get(nick), f,nick);
     }
-    //public void fileReceived(filepath,remote ip,conv){}//NI
     
     
 }

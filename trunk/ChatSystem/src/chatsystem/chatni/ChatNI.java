@@ -99,7 +99,7 @@ public class ChatNI {
     }
 
     public void transferFile(InetAddress ip,File file){
-        TCPSender tcpsend=new TCPSender(ip,file);
+        TCPSender tcpsend=new TCPSender(ip,file,this);
         (new Thread(tcpsend)).start();
     }
     //public void processFile(filepath, remote ip,conv){}

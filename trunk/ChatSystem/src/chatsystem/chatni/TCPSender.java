@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,14 +33,19 @@ import java.util.logging.Logger;
 public class TCPSender extends Thread {
     private File file;
     private InetAddress remoteip;
-    public TCPSender(InetAddress ip,File f){
+    private ChatNI ni;
+    public TCPSender(InetAddress ip,File f,ChatNI ni){
         this.file=f;
         this.remoteip=ip;
+        this.ni=ni;
     }
     
     public void run() {
         try {
-            FileMessage fm=new FileMessage(file.getName(),null,file.length());
+            ArrayList<String> dest=new ArrayList<String>();
+            dest.add("ju");
+            FileMessage fm=new FileMessage(file.getName(),dest,file.length());
+            fm.setNickname(ni.local_nickname());
             Socket sock = new Socket(remoteip,6789);
             
             //Envoi des infos sur le fichier
@@ -60,8 +66,7 @@ public class TCPSender extends Thread {
             byte[] mybytearray = new byte[(int)file.length()];
             int bytesRead = fis.read(mybytearray, 0, mybytearray.length);
             os.write(mybytearray, 0, bytesRead);
-            System.out.println("File sent to " + sock);
-            
+            System.out.println("File sent to " + sock );
             bos.close();
             out.flush();
             os.flush();

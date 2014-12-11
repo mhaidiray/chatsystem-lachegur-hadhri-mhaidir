@@ -8,81 +8,111 @@ import Signals.TextMessage;
 import Signals.Hello;
 import Signals.Goodbye;
 import Signals.HelloAck;
-import chatsystem.chatni.ChatNI;
 import java.io.IOException;
 import java.net.*;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.net.NetworkInterface;
-import java.util.Enumeration;
 /**
  *
  * @author Machd
  */
 public class UDPSender {
+    
+    ////////////////////////////////////
+    ////////////DECLARATIONS////////////
+    ////////////////////////////////////
+    
     private ChatNI ni;
-
+    private DatagramSocket socket;
+    
+    ////////////////////////////////////
+    ////////////CONSTRUCTEUR////////////
+    ////////////////////////////////////
+    
+    public UDPSender(DatagramSocket socket) {
+        this.socket = socket;
+    }
+    
+    ////////////////////////////////////////
+    //FONCTION GENERIQUE D'ENVOI DE PAQUET//
+    ////////////////////////////////////////
+    
+    public void send(InetAddress ip, byte[] msg) throws SocketException, IOException{
+        DatagramPacket packet = new DatagramPacket(msg,msg.length,ip,9876);
+        socket.send(packet);
+    }
+    
+    ////////////////////////////////
+    //FONCTIONS D'ENVOI DE SIGNAUX//
+    ////////////////////////////////
+    
+    public void sendHello() throws IOException{
+        //Création d'un signal Hello
+        Hello h=new Hello(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());//création de l'instance hello
+        
+        //Conversion de la classe Hello en bytearray
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(bos);
+        out.writeObject(h);
+        byte[] byteArray = bos.toByteArray();
+        
+        //Envoi du bytearray en broadcast
+        send(InetAddress.getByName("255.255.255.255"),byteArray);
+    }
+    
+    public void sendHelloAck(InetAddress ip) throws IOException{
+        //Création d'un signal HelloAck
+        HelloAck h=new HelloAck(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());//création de l'instance hello
+        
+        //Conversion de la classe HelloAck en bytearray
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(bos);
+        out.writeObject(h);
+        byte[] byteArray = bos.toByteArray();
+        
+        //Envoi du bytearray à l'ip fournie en paramètre
+        send(ip,byteArray);
+    }
+    
+    public void sendGoodBye() throws IOException{
+        //Création d'un signal Goodbye
+        Goodbye h=new Goodbye(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());//création de l'instance hello
+        
+        //Conversion de la classe Goodbye en bytearray
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutput out = new ObjectOutputStream(bos);
+        out.writeObject(h);
+        byte[] byteArray = bos.toByteArray();
+        
+        //Envoi du bytearray en broadcast
+        send(InetAddress.getByName("255.255.255.255"),byteArray);
+    }
+    
+    public void sendMsg(InetAddress ip, String msg) throws SocketException, IOException{
+        //Création du Signal TextMessage
+        TextMessage h=new TextMessage(msg);
+        h.setNickname(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());
+        
+        //Conversion de la classe TextMessage en bytearray
+        ByteArrayOutputStream bos = new ByteArrayOutputStream(256);
+        ObjectOutput out = new ObjectOutputStream(bos);
+        out.writeObject(h);
+        byte[] byteArray = bos.toByteArray();
+        
+        //Envoi du bytearray à l'ip fournie en paramètre
+        send(ip,byteArray);
+    }
+    
+    ////////////////////////////////////////
+    ///////////GETTERS AND SETTERS//////////
+    ////////////////////////////////////////
+    
     public ChatNI getNi() {
         return ni;
     }
 
     public void setNi(ChatNI ni) {
         this.ni = ni;
-    }
-    private DatagramSocket socket=null;
-
-    public UDPSender(DatagramSocket socket) {
-        this.socket = socket;
-    }
-    
-    private DatagramPacket packet=null;
-    
-    
-    public void send(InetAddress ip, byte[] msg) throws SocketException, IOException{
-        packet = new DatagramPacket(msg,msg.length,ip,9876);
-        socket.send(packet);
-    }
-    
-    
-    
-    public void sendHello() throws IOException{
-        Hello h=new Hello(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());//création de l'instance hello
-        //classe -> bytes
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(bos);
-        out.writeObject(h);
-        byte[] byteArray = bos.toByteArray();
-        //envoie en broadcast
-        send(InetAddress.getByName("255.255.255.255"),byteArray);
-    }
-    
-    public void sendHelloAck(InetAddress ip) throws IOException{
-        HelloAck h=new HelloAck(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());//création de l'instance hello
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(bos);
-        out.writeObject(h);
-        byte[] byteArray = bos.toByteArray();
-        send(ip,byteArray);
-    }
-    
-    public void sendGoodBye() throws IOException{
-        Goodbye h=new Goodbye(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());//création de l'instance hello
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutput out = new ObjectOutputStream(bos);
-        out.writeObject(h);
-        byte[] byteArray = bos.toByteArray();
-        send(InetAddress.getByName("255.255.255.255"),byteArray);
-    }
-    
-    public void sendMsg(InetAddress ip, String msg) throws SocketException, IOException{
-        TextMessage h=new TextMessage(msg);//création de l'instance hello
-        h.setNickname(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress());
-        //gérer la liste des destinataires
-        ByteArrayOutputStream bos = new ByteArrayOutputStream(256);
-        ObjectOutput out = new ObjectOutputStream(bos);
-        out.writeObject(h);
-        byte[] byteArray = bos.toByteArray();
-        send(ip,byteArray);
     }
 }

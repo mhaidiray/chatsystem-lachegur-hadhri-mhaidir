@@ -11,7 +11,6 @@ import Signals.Goodbye;
 import Signals.typeContenu;
 import Signals.AbstractMessage;
 import Signals.HelloAck;
-import chatsystem.chatni.ChatNI;
 import java.io.IOException;
 import java.net.*;
 import java.util.logging.Level;
@@ -25,20 +24,26 @@ import java.text.ParseException;
  * @author Machd
  */
 public class UDPReceiver implements Runnable{
+    ////////////////////////////////////
+    ////////////DECLARATIONS////////////
+    ////////////////////////////////////
+    
     private DatagramSocket socket=null;
     private ChatNI ni;
     private volatile boolean stop;
-    public ChatNI getNi() {
-        return ni;
-    }
-
-    public void setNi(ChatNI ni) {
-        this.ni = ni;
-    }
+    
+    ////////////////////////////////////
+    ////////////CONSTRUCTEUR////////////
+    ////////////////////////////////////
+    
     public UDPReceiver(DatagramSocket socket) {
         this.socket = socket;
         stop=false;
     }
+    
+    //////////////////////////////////////////////////////
+    ////FONCTIONS D'EXCTRACTION DU NICKNAME ET DE L'IP////
+    //////////////////////////////////////////////////////
     
     public String extractNickname(String nick){
         return nick.substring(0,nick.indexOf('@'));
@@ -49,15 +54,29 @@ public class UDPReceiver implements Runnable{
         return InetAddress.getByName(aux);
     }
     
+    ////////////////////////////////
+    ////////FONCTION D'ARRET////////
+    ////////////////////////////////
+    
     public void close() {
         this.stop=true;
     }
+    
+    ////////////////////////////////
+    //////FONCTION PRINCIPALE///////
+    ////////////////////////////////
+    
     private DatagramPacket packet=null;
     public void run(){
         try {
             byte[] buf=new byte[512];
             packet=new DatagramPacket(buf,buf.length);
             while (!stop){
+                
+                //////////////////////////////////////////////////
+                //RECEPTION D'UN PAQUET ET DESERIALISATION////////
+                //////////////////////////////////////////////////
+                
                 socket.receive(packet);
                 ObjectInput in = null;
                 ByteArrayInputStream byteIn = new ByteArrayInputStream(packet.getData());
@@ -65,14 +84,24 @@ public class UDPReceiver implements Runnable{
                 AbstractMessage aMessage = (AbstractMessage) in.readObject();
                 String nickn=extractNickname(aMessage.getNickname());
                 InetAddress remoteip=extractIp(aMessage.getNickname());
-                //désactiver les messages envoyés à soi-même=> enlever le "true||" ci-bas
+                
+                ////////////////////////////////////////////////////////////////////////////
+                //On considère pour l'instant qu'un utilisateur peur s'envoyer des messages/
+                //à lui même, pour tester sa connexion, entre autres.///////////////////////
+                //désactiver les messages envoyés à soi-même=> enlever le "true||" ci-bas///
+                ////////////////////////////////////////////////////////////////////////////
+                
+                
+                //////////////////////////////
+                //TRAITEMENT DU MESSAGE RECU//
+                //////////////////////////////
+                
                 if (true||!(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress()).equals(aMessage.getNickname())){
-
+                       
                     if (aMessage.getTypeContenu() == typeContenu.HELLO){
                             Hello helloSerialise = (Hello) aMessage;
                             System.out.println("C'est un HELLO ! " + nickn);
                             this.ni.processHello(nickn,remoteip);
-
                     }
                     else if (aMessage.getTypeContenu() == typeContenu.GOODBYE){
                             Goodbye goodbyeSerialise = (Goodbye) aMessage;
@@ -100,6 +129,21 @@ public class UDPReceiver implements Runnable{
         } catch (ParseException ex) {
             Logger.getLogger(UDPReceiver.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        //ARRET DU THREAD
+        
         Thread.currentThread().interrupt();
+    }
+    
+    ////////////////////////////////////////
+    ///////////GETTERS AND SETTERS//////////
+    ////////////////////////////////////////
+    
+    public ChatNI getNi() {
+        return ni;
+    }
+
+    public void setNi(ChatNI ni) {
+        this.ni = ni;
     }
 }

@@ -7,27 +7,15 @@ package chatsystem.chatni;
 
 import Signals.AbstractMessage;
 import Signals.FileMessage;
-import Signals.Hello;
-import Signals.typeContenu;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInput;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.OutputStream;
 import java.net.InetAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -36,10 +24,19 @@ import java.util.logging.Logger;
 public class TCPReceiver extends Thread {
     private ChatNI ni;
     private Socket sock;
+    
+    ////////////////////////////////////
+    ////////////CONSTRUCTEUR////////////
+    ////////////////////////////////////
+    
     public TCPReceiver(Socket sock,ChatNI ni) {
         this.sock=sock;
         this.ni=ni;
     }
+    
+    //////////////////////////////////////////////////////
+    ////FONCTIONS D'EXCTRACTION DU NICKNAME ET DE L'IP////
+    //////////////////////////////////////////////////////
     
     public String extractNickname(String nick){
         return nick.substring(0,nick.indexOf('@'));
@@ -50,10 +47,25 @@ public class TCPReceiver extends Thread {
         return InetAddress.getByName(aux);
     }
     
+    //////////////////////////////////////////////////////
+    /////////////////FONCTION PRINCIPALE//////////////////
+    //////////////////////////////////////////////////////
+    
     public void run() {
         if (sock!=null){
             try {
-                // RECEPTION DU FILEMESSAGE
+                /*PRINCIPE GENERAL : On reçoit d'abord un
+                FileMessage avec le nom, la taille, le pseudo
+                de l'envoyeur et des récepteurs. On extrait ces infos
+                puis on reçoit le ByteArray contenant le fichier
+                en lui-même. On crée ensuite le fichier dans un dossier
+                "ReceivedFiles" situé à la racine du projet.
+                */
+                
+                /////////////////////////////////
+                //// RECEPTION DU FILEMESSAGE////
+                /////////////////////////////////
+                
                 InputStream is = sock.getInputStream();
                 byte[] byteArray=new byte[512];
                 is.read(byteArray);
@@ -64,9 +76,12 @@ public class TCPReceiver extends Thread {
                 FileMessage fmSerialise = (FileMessage) aMessage;
                 System.out.println("C'est un FILEMESSAGE ! " + fmSerialise.getNamefile());
                 
-		ni.processMsg(extractNickname(fmSerialise.getNickname()), ("File added : "+fmSerialise.getNamefile()), 0);
+		ni.processMsg(extractNickname(fmSerialise.getNickname()), ("File added : "+fmSerialise.getNamefile()+"\n   The file was saved to your ChatSystem/ReceivedFiles directory."),0);
                 
-                //RECEPTION DU FILE
+                ////////////////////////////////////
+                ////////RECEPTION DU FICHIER////////
+                ////////////////////////////////////
+                
                 byteArray=null;
                 byteArray=new byte[(int)fmSerialise.getSize()]; 
                 FileOutputStream fos = new FileOutputStream("./ReceivedFiles/"+fmSerialise.getNamefile());
@@ -75,16 +90,20 @@ public class TCPReceiver extends Thread {
                     fos.write(byteArray,0,bytesRead);
                 }
                 
+                ///////////////////////////////////////////
+                /////FERMETURE SOCKET, STREAMS, THREAD/////
+                ///////////////////////////////////////////
+                
                 sock.close();
                 is.close();
                 this.interrupt();
                         
             } catch (IOException ex) {
-                Logger.getLogger(TCPReceiver.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Erreur réseau dans la réception du fichier");
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(TCPReceiver.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Erreur de sérialisation dans la réception du fichier");
             } catch (ParseException ex) {
-                Logger.getLogger(TCPReceiver.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Erreur de parsing dans la réception du fichier");
             } 
     }
     

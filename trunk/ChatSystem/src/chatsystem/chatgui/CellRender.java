@@ -7,8 +7,6 @@ package chatsystem.chatgui;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
-import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -19,16 +17,27 @@ import javax.swing.ListCellRenderer;
  * @author Machd
  */
 public class CellRender extends JLabel implements ListCellRenderer {
+    ////////////////////////////////////
+    ////////////DECLARATIONS////////////
+    ////////////////////////////////////
     private JList list;
-
+    private  HashMap<Integer,Integer> usersNotif=new HashMap<Integer,Integer>();
+    
     public void setList(JList list) {
         this.list = list;
     }
+    
+    ////////////////////////////////////
+    ////////////CONSTRUCTEUR////////////
+    ////////////////////////////////////
+    
     public CellRender() {
         setOpaque(true);
     }
 
-    private  HashMap<Integer,Integer> usersNotif=new HashMap<Integer,Integer>();
+    /////////////////////////////////////////////
+    //////Ajout - Retrait de notification////////
+    /////////////////////////////////////////////
     
     public void addNotif(int x) {
         int aux=1;
@@ -69,8 +78,9 @@ public class CellRender extends JLabel implements ListCellRenderer {
              foreground = Color.WHITE;
          // unselected, and not the DnD drop location
          }
+         //Verification des messages reçus
          else if(usersNotif.containsKey(index)) {
-             //setFont(new Font(getFont(),Font.BOLD,getFont().getSize()));
+             //si l'utilisateur nous a envoyé un message, on met en valeur la case
              background = Color.GREEN;
              foreground = Color.BLACK;
              setText(value.toString()+" ("+usersNotif.get(index)+")");
@@ -88,6 +98,7 @@ public class CellRender extends JLabel implements ListCellRenderer {
          return this;
      }
 
+    //Enlever la notification d'une case
     void deNotif(int indexOf) {
         usersNotif.remove(indexOf);
     }

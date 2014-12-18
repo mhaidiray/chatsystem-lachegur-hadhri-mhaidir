@@ -121,7 +121,7 @@ public class UDPReceiver implements Runnable{
                 }
             }
         } catch (SocketException ex) {
-            Logger.getLogger(UDPReceiver.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Fermeture du socket serveur UDP réussie");
         } catch (IOException ex) {
             Logger.getLogger(UDPReceiver.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

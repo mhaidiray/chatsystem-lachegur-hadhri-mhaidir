@@ -59,7 +59,7 @@ public class TCPServer extends Thread{
                     sock=serv.accept();
                 }
             } catch (IOException ex) {
-                System.out.println("Erreur réseau lors de la connexion au socket distant");
+                System.out.println("Fermeture du socket serveur TCP réussie");
             }
                 if (sock!=null){
                     

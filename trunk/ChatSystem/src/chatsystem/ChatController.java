@@ -86,7 +86,7 @@ public class ChatController {
     
     public void deleteUser(String nickname){//usually called by chatNI
         users.remove(nickname);
-        gui.updateList(nickname,false);
+        gui.updateList(nickname+"@"+users.get(nickname).getHostAddress(),false);
     }
     
     /////////////////////////////////////////////////////
@@ -109,7 +109,7 @@ public class ChatController {
     /////////////////////////////////////////////////////////
     
     public void notify(String nickn,String message,int conv) throws ParseException{//called by NI
-        gui.addMsgtoHistory(message, nickn);
+        gui.addMsgtoHistory(message, nickn+"@"+users.get(nickn).getHostAddress());
     }
     
     ///////////////////////////////

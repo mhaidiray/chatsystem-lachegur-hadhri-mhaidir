@@ -96,7 +96,7 @@ public class UDPReceiver implements Runnable{
                 //TRAITEMENT DU MESSAGE RECU//
                 //////////////////////////////
                 
-                if (true||!(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress()).equals(aMessage.getNickname())){
+                if (!(this.getNi().local_nickname()+"@"+InetAddress.getLocalHost().getHostAddress()).equals(aMessage.getNickname())){
                        
                     if (aMessage.getTypeContenu() == typeContenu.HELLO){
                             Hello helloSerialise = (Hello) aMessage;

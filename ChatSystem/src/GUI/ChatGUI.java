@@ -13,7 +13,9 @@ import java.text.ParseException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/**Interface graphique du système, et façade reliant tous les objets graphiques au contrôleur du programme.
+/**
+ * Interface graphique du système, et façade reliant tous les objets graphiques
+ * au contrôleur du programme.
  */
 public class ChatGUI extends JFrame implements Runnable {
 
@@ -28,15 +30,42 @@ public class ChatGUI extends JFrame implements Runnable {
      */
     private FenetreChat principale;
     /**
-     * booléen nous indiquant si l'on est connecté ou pas
+     * Windowadapter permettant de gérer la fermeture de la fenêtre
+     */
+    private WindowAdapter wa;
+    /**
+     * Booléen nous indiquant si l'on est connecté ou pas
      */
     private boolean connected;
 
     public ChatGUI() {
         //PARAMETRAGE DE LA FENETRE
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setTitle("ChatSystem");
+        wa = new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                ChatGUI frame = (ChatGUI) e.getSource();
 
+                int result = JOptionPane.showConfirmDialog(
+                        frame,
+                        "Are you sure you want to exit the application?",
+                        "Exit Application",
+                        JOptionPane.YES_NO_OPTION);
+
+                if (result == JOptionPane.YES_OPTION) {
+                    if (connected) {
+                        try {
+                            frame.performDisconnect();
+                        } catch (IOException ex) {
+                        } catch (InterruptedException ex) {
+                        }
+                    }
+                    System.exit(0);
+                }
+
+            }
+        };
+        this.setTitle("ChatSystem");
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(wa);
         //CREATION DES DEUX VUES : VUE D'ACCUEIL ET FENETRE DE CHAT
         this.principale = new FenetreChat();
         principale.setGui(this);
@@ -57,31 +86,6 @@ public class ChatGUI extends JFrame implements Runnable {
         principale.nickname(local_nickname());
         this.setSize(principale.getPreferredSize());
         this.setContentPane(principale);
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-        this.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                ChatGUI frame = (ChatGUI) e.getSource();
-
-                int result = JOptionPane.showConfirmDialog(
-                        frame,
-                        "Are you sure you want to exit the application?",
-                        "Exit Application",
-                        JOptionPane.YES_NO_OPTION);
-
-                if (result == JOptionPane.YES_OPTION) {
-                    if (connected) {
-                        try {
-                            frame.performDisconnect();
-                        } catch (IOException ex) {
-                        } catch (InterruptedException ex) {
-                        }
-                    }
-                    System.exit(0);
-                }
-                
-            }
-        });
         this.setVisible(true);
         connected = true;
     }
@@ -96,7 +100,7 @@ public class ChatGUI extends JFrame implements Runnable {
         this.setContentPane(accueil);
         this.addWindowListener(null);
         this.setVisible(true);
-        connected=false;
+        connected = false;
     }
 
     @Override

@@ -28,10 +28,14 @@ public class UDPReceiver implements Runnable{
     ////////////DECLARATIONS////////////
     ////////////////////////////////////
     
+    /** Socket UDP utilisé pour l'envoi et la réception de signaux et de messages textes*/
     private DatagramSocket socket=null;
+    /** Classe ChatNI, façade intermédiaire entre cette classe et le contrôleur du système*/
     private ChatNI ni;
+    /**Booléen permettant d'arrêter le thread actuel*/
     private volatile boolean stop;
-    
+    /**Paquet UDP reçu*/
+    private DatagramPacket packet=null;
     ////////////////////////////////////
     ////////////CONSTRUCTEUR////////////
     ////////////////////////////////////
@@ -45,10 +49,12 @@ public class UDPReceiver implements Runnable{
     ////FONCTIONS D'EXCTRACTION DU NICKNAME ET DE L'IP////
     //////////////////////////////////////////////////////
     
+    /** Fonction permettant d'extraire le nickname de l'ensemble "nickname@ip"*/
     public String extractNickname(String nick){
         return nick.substring(0,nick.indexOf('@'));
     }
     
+    /** Fonction permettant d'extraire l'ip de l'ensemble "nickname@ip"*/
     public InetAddress extractIp(String nick) throws UnknownHostException{
         String aux=nick.substring(nick.indexOf('@')+1);
         return InetAddress.getByName(aux);
@@ -58,6 +64,7 @@ public class UDPReceiver implements Runnable{
     ////////FONCTION D'ARRET////////
     ////////////////////////////////
     
+    /**Fonction de fermeture du socket*/
     public void close() {
         this.stop=true;
     }
@@ -66,7 +73,7 @@ public class UDPReceiver implements Runnable{
     //////FONCTION PRINCIPALE///////
     ////////////////////////////////
     
-    private DatagramPacket packet=null;
+    /**Réception d'un paquet, déserialisation, et traitement du signal*/
     public void run(){
         try {
             byte[] buf=new byte[512];

@@ -18,13 +18,16 @@ public class TCPServer extends Thread{
     ////////////DECLARATIONS////////////
     ////////////////////////////////////
     
+    /** Classe ChatNI, façade intermédiaire entre cette classe et le contrôleur du système*/
     private ChatNI ni;
+    /** Socket serveur*/
     private ServerSocket serv;
     
     ////////////////////////////////////
     ////////////CONSTRUCTEUR////////////
     ////////////////////////////////////
     
+    /** Cosntructeur : on crée le socket serveur*/
     public TCPServer() throws IOException{
         serv=new ServerSocket(6789);
     }
@@ -33,6 +36,7 @@ public class TCPServer extends Thread{
     //FONCTION DE FERMETURE DU SOCKET DEPUIS UNE CLASSE EXTERNE
     ///////////////////////////////////////////////////////////
     
+    /**Fonction de fermeture du socket serveur*/
     public void close() throws IOException {
         this.serv.close();
     }
@@ -41,14 +45,15 @@ public class TCPServer extends Thread{
     //FONCTION PRINCIPALE//
     ///////////////////////
     
-    @Override
-    public void run() {
-        
-        /*PRINCIPE DU TCPSERVER : Le TCPServer écoute en permanence, 
+    /**PRINCIPE DU TCPSERVER : Le TCPServer écoute en permanence, 
         dès qu'une connexion entrante est détectée, il forme la 
         liaison et crée une instance de TCPReceiver sur un nouveau
         thread. Il reprend ensuite directement son travail d'écoute.
         */
+    @Override
+    public void run() {
+        
+        
         while(true) {
             Socket sock=null;
             try {

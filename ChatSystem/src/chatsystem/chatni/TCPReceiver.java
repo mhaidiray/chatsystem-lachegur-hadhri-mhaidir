@@ -22,13 +22,18 @@ import java.text.ParseException;
  * @author Machd
  */
 public class TCPReceiver extends Thread {
+    
+    /** Classe ChatNI, façade intermédiaire entre cette classe et le contrôleur du système*/
     private ChatNI ni;
+    
+    /** Socket émetteur du fichier à reçevoir*/
     private Socket sock;
     
     ////////////////////////////////////
     ////////////CONSTRUCTEUR////////////
     ////////////////////////////////////
     
+    /** Constructeur prenant en argument le socket émetteur du fichier et le ChatNI*/
     public TCPReceiver(Socket sock,ChatNI ni) {
         this.sock=sock;
         this.ni=ni;
@@ -38,10 +43,12 @@ public class TCPReceiver extends Thread {
     ////FONCTIONS D'EXCTRACTION DU NICKNAME ET DE L'IP////
     //////////////////////////////////////////////////////
     
+    /** Fonction permettant d'extraire le nickname de l'ensemble "nickname@ip"*/
     public String extractNickname(String nick){
         return nick.substring(0,nick.indexOf('@'));
     }
     
+    /** Fonction permettant d'extraire l'ip de l'ensemble "nickname@ip"*/
     public InetAddress extractIp(String nick) throws UnknownHostException{
         String aux=nick.substring(nick.indexOf('@')+1);
         return InetAddress.getByName(aux);
@@ -51,6 +58,13 @@ public class TCPReceiver extends Thread {
     /////////////////FONCTION PRINCIPALE//////////////////
     //////////////////////////////////////////////////////
     
+    /**FONCTION PRINCIPALE : On reçoit d'abord un
+                FileMessage avec le nom, la taille, le pseudo
+                de l'envoyeur et des récepteurs. On extrait ces infos
+                puis on reçoit le ByteArray contenant le fichier
+                en lui-même. On crée ensuite le fichier dans un dossier
+                "ReceivedFiles" situé à la racine du projet.
+                */
     public void run() {
         if (sock!=null){
             try {

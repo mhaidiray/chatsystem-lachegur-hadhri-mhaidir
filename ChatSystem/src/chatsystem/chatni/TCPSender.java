@@ -26,15 +26,20 @@ public class TCPSender extends Thread {
     ////////////DECLARATIONS////////////
     ////////////////////////////////////
     
+    /** Fichier à envoyer*/
     private File file;
+    /** Adresse du destinataire*/
     private InetAddress remoteip;
+    /** Nickname du destinataire*/
     private String remotenick;
+    /** Classe ChatNI, façade intermédiaire entre cette classe et le contrôleur du système*/
     private ChatNI ni;
     
     ////////////////////////////////////
     ////////////CONSTRUCTEUR////////////
     ////////////////////////////////////
     
+    /** Constructeur prenant en argument l'ip, le fichier, le nickname et le ChatNI*/
     public TCPSender(InetAddress ip,File f,ChatNI ni,String nick){
         this.file=f;
         this.remoteip=ip;
@@ -42,6 +47,12 @@ public class TCPSender extends Thread {
         this.remotenick=nick;
     }
     
+    /** FONCTION PRINCIPALE : On crée un FileMessage 
+            contenant des infos générales sur le fichier (nom, taille, 
+            pseudo de l'envoyeur et des recepteurs. On envoie d'abord ce 
+            fichier d'infos, avant d'envoyer le fichier en lui-même
+            sous forme de ByteArray.
+            */
     public void run() {
         try {
             /* FONCTIONNEMENT GENERAL : On crée un FileMessage 

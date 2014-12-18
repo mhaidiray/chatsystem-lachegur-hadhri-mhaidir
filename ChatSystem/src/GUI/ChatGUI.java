@@ -77,8 +77,9 @@ public class ChatGUI extends JFrame implements Runnable {
                         } catch (InterruptedException ex) {
                         }
                     }
+                    System.exit(0);
                 }
-                System.exit(0);
+                
             }
         });
         this.setVisible(true);
@@ -94,7 +95,6 @@ public class ChatGUI extends JFrame implements Runnable {
         this.setSize(accueil.getPreferredSize());
         this.setContentPane(accueil);
         this.addWindowListener(null);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
         connected=false;
     }

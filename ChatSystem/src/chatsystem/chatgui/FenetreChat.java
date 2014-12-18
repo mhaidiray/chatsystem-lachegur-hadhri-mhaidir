@@ -21,32 +21,34 @@ import javax.swing.JFileChooser;
  * @author Samih
  */
 public class FenetreChat extends javax.swing.JPanel {
-    ////////////////////////////////////
-    ////////////DECLARATIONS////////////
-    ////////////////////////////////////
     
     private ChatGUI gui;
+    /**variable CellRender pour modifier la couleur lors de la récéption*/
     CellRender cr = new CellRender();
+    /** contenu de la liste des utilisateurs*/
     DefaultListModel model;
     
-    //Hashmap qui associe à un utilisateur l'ensemble des messages
-    //échangés avec lui depuis le début de la session.
+    /**Hashmap qui associe à un utilisateur l'ensemble des messages 
+     * échangés avec lui depuis le début de la session.*/
     HashMap<String, String> histoMap = new HashMap<String, String>();
     
-    public void setGui(ChatGUI gui) {
-        this.gui = gui;
+    public FenetreChat() {
+        initComponents();
+        model=new DefaultListModel();
+        UserList.setModel(model);
+        initHistory();
+        cr.setList(UserList);
+        UserList.setCellRenderer(cr);
     }
     
-    //Fonction affichant le nickname de l'utilisateur dans un label en haut de la fenêtre
+    
+    /**Fonction affichant le nickname de l'utilisateur dans un label en haut de la fenêtre*/
     public void nickname(String nick) {
         this.Nickname.setText(nick);
     }
     
-    /////////////////////////////////////////////////////////////
-    //// FONCTIONS DE GESTION DE LA LISTE ET DE L'HISTORIQUE/////
-    /////////////////////////////////////////////////////////////
     
-    //Ajout ou retrait d'utilisateur de la liste
+    /** Ajout ou retrait d'utilisateur de la liste*/
     public void updateList(String nickname,boolean x){
         if (!x&&model.contains(nickname)) {
             model.removeElement(nickname);
@@ -58,7 +60,7 @@ public class FenetreChat extends javax.swing.JPanel {
         }
     }
     
-    //Initialisation de la zone d'historique
+    /**Initialisation de la zone d'historique*/
     public void initHistory() {
         HistoricArea.setText("Hello, choose someone to talk to!");
         histoMap.clear();
@@ -66,8 +68,8 @@ public class FenetreChat extends javax.swing.JPanel {
         cr.clear();
     }
     
-    //Fonction utile à la mise à jour du contenu de l'historique suite à
-    //un clic dans la liste d'utilisateurs
+    /**Fonction utile à la mise à jour du contenu de l'historique suite à
+    *un clic dans la liste d'utilisateurs*/
     public void updateHistory() {
         if (!UserList.isSelectionEmpty()) {
             HistoricArea.setText(histoMap.get(UserList.getSelectedValue().toString()));
@@ -75,8 +77,8 @@ public class FenetreChat extends javax.swing.JPanel {
         }
     }
     
-    //Fonction utile à la mise à jour du contenu de l'historique suite à 
-    //la réception d'un message
+    /**Fonction utile à la mise à jour du contenu de l'historique suite à 
+    la réception d'un message*/
     public void addToHistory(String message,String sender) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         Date date = new Date();
@@ -87,7 +89,7 @@ public class FenetreChat extends javax.swing.JPanel {
         UserList.repaint();
     }
     
-    //Fonction de notification de message reçu
+    /**Fonction de notification de message reçu*/
     public void notification(String nickname) {
         if (!UserList.isSelectionEmpty()) {
             if (model.contains(nickname)&&(!UserList.getSelectedValue().toString().equals(nickname))) {
@@ -101,9 +103,8 @@ public class FenetreChat extends javax.swing.JPanel {
         }
     }
     
-    /////////////////////////////////////////////////////
-    ///FONCTIONS D'ENVOI DE MESSAGES ET DE FICHIERS//////
-    /////////////////////////////////////////////////////
+    
+    /**FONCTIONS D'ENVOI DE MESSAGES*/
     
     public void sendFile(File f) {
         if(UserList.getSelectedValue()!=null){
@@ -115,6 +116,7 @@ public class FenetreChat extends javax.swing.JPanel {
         }
     }
     
+    /**FONCTIONS D'ENVOI DE FICHIERS*/
     public void sendMessage(){
         if(UserList.getSelectedValue()!=null){
             SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
@@ -135,20 +137,6 @@ public class FenetreChat extends javax.swing.JPanel {
         }
     }
     
-    
-    ////////////////////////////////////
-    ////////////CONSTRUCTEUR////////////
-    ////////////////////////////////////
-    
-    
-    public FenetreChat() {
-        initComponents();
-        model=new DefaultListModel();
-        UserList.setModel(model);
-        initHistory();
-        cr.setList(UserList);
-        UserList.setCellRenderer(cr);
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -270,11 +258,11 @@ public class FenetreChat extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
+/** En cliquant sur Send Button on exécute la fonction sendMessage()*/
     private void SendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendButtonActionPerformed
         sendMessage();
     }//GEN-LAST:event_SendButtonActionPerformed
-
+/** Le traitement de la déconnecxion*/
     private void DisconnectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DisconnectButtonActionPerformed
         gui.switchBack();
         try {
@@ -284,7 +272,7 @@ public class FenetreChat extends javax.swing.JPanel {
             Logger.getLogger(FenetreChat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_DisconnectButtonActionPerformed
-
+/** Le traitement de la sélection du fichier et de son envoi*/
     private void AddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddFileActionPerformed
         //On utilise un JFILECHOOSER pour choisir le fichier à envoyer
         JFileChooser jf=new JFileChooser();
@@ -308,7 +296,7 @@ public class FenetreChat extends javax.swing.JPanel {
         }
         
     }//GEN-LAST:event_AddFileActionPerformed
-
+/** selection de l'utilisateur sur la liste */
     private void UserListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserListMouseClicked
          
         if(UserList.getSelectedValue()!=null){
@@ -335,5 +323,7 @@ public class FenetreChat extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
-
+   public void setGui(ChatGUI gui) {
+        this.gui = gui;
+    }    
 }

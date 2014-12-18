@@ -18,17 +18,11 @@ public class Accueil extends javax.swing.JPanel {
         this.gui = gui;
     }
     
-    ////////////////////////////////////
-    ////////////CONSTRUCTEUR////////////
-    ////////////////////////////////////
-    
     public Accueil() {
         initComponents();
     }
 
-    //////////////////////////////////////
-    ///FONCTION PRINCIPALE DE CONNEXION///
-    //////////////////////////////////////
+    /**Fonction principale de connexion*/
     
     public void performConnexion() {
         try {
@@ -103,7 +97,7 @@ public class Accueil extends javax.swing.JPanel {
                 .addGap(37, 37, 37))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void ConnectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConnectButtonActionPerformed
         performConnexion();
     }//GEN-LAST:event_ConnectButtonActionPerformed

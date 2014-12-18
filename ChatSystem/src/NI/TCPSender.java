@@ -17,9 +17,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 
-/**
- *
- * @author Machd
+/**Classe émettrice de fichiers, elle est lancée lorsque l'utilisateur local envoie un fichier et s'arrête lorsque l'envoi est terminé.
  */
 public class TCPSender extends Thread {
     ////////////////////////////////////

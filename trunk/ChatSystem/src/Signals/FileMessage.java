@@ -52,7 +52,7 @@ public class FileMessage extends AbstractMessage {
 	}
 
 	/**
-	 * @returns the file size
+	 * @return the file size
 	 */
 	public long getFileSize() {
 		return fileSize;

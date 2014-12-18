@@ -15,21 +15,12 @@ import javax.swing.JFrame;
  * @author lachegur
  */
 public class ChatGUI extends JFrame implements Runnable  {
-    ////////////////////////////////////
-    ////////////DECLARATIONS////////////
-    ////////////////////////////////////
     
-    private ChatController control;
-    
-    //Vue d'accueil : elle permet de rentrer un nickname et de se connecter.
+    private ChatController control;    
+    /**Vue d'accueil : elle permet de rentrer un nickname et de se connecter.*/
     private Accueil accueil;
-    
-    //Vue principale : elle permet de communiquer, d'envoyer des files, et de se déconnecter.
+    /**Vue principale : elle permet de communiquer, d'envoyer des files, et de se déconnecter.*/
     private FenetreChat principale;
-    
-    ////////////////////////////////////
-    ////////////CONSTRUCTEUR////////////
-    ////////////////////////////////////
     
     public ChatGUI () {
         //PARAMETRAGE DE LA FENETRE
@@ -48,18 +39,15 @@ public class ChatGUI extends JFrame implements Runnable  {
         this.setVisible(true);
     }
     
-    //////////////////////////////////////////////////////////////////////
-    ///FONCTIONS DE SWITCH ENTRE LA VUE D'ACCUEIL ET LA FENETRE DE CHAT///
-    //////////////////////////////////////////////////////////////////////
-    
-    public void switchView() {//go from accueil to chatfenetre
+    /**Le passage de l'acceuil à la fenetre du chat */
+    public void switchView() {
         principale.nickname(local_nickname());
         this.setSize(principale.getPreferredSize());
         this.setContentPane(principale);
         this.setVisible(true);
     }
-    
-    public void switchBack() {//go back to accueil from chatfenetre
+    /**Retour vers accueil depuis la fenetre du chat*/
+    public void switchBack() {
         principale.nickname(null);
         principale.initHistory();
         this.setSize(accueil.getPreferredSize());
@@ -71,45 +59,36 @@ public class ChatGUI extends JFrame implements Runnable  {
         
     }
     
-    ///////////////////////////////////////////
-    ///FONCTIONS DE CONNEXION/DECONNEXION//////
-    ///////////////////////////////////////////
-    
+    /** Fonction de connexion*/ 
     public void performConnect(String nickname) throws IOException {
         this.control.processConnect(nickname);
     }
-    
+    /** Fonction de déconnexion*/ 
     public void performDisconnect() throws IOException, InterruptedException {
         this.control.processDisconnect();
     }
     
-    /////////////////////////////////////////////////////////////
-    //// FONCTIONS DE GESTION DE LA LISTE ET DE L'HISTORIQUE/////
-    /////////////////////////////////////////////////////////////
-    
+    /**Gestion de la liste des personnes connectées*/
     public void updateList(String nickname,boolean x){
         principale.updateList(nickname,x);
     }
     
+    /**L'ajout des messages à l'historique*/
     public void addMsgtoHistory(String msg,String sender) throws ParseException {
         principale.addToHistory(msg,sender);
     }
     
-    /////////////////////////////////////////////////////
-    ///FONCTIONS D'ENVOI DE MESSAGES ET DE FICHIERS//////
-    /////////////////////////////////////////////////////
+    /** envoi de message*/
     
     public void performSend(String msg,String nickname) throws IOException{
         this.control.processSend(nickname,msg,0);
     }
-    
+    /** envoi de fichier*/
     public void performSendFile(String nickname,File f){
         control.processSendFile(nickname, f);
     }
     
-    ///////////////////////////////
-    //////GETTERS ET SETTERS///////
-    ///////////////////////////////
+    /**GETTERS ET SETTERS*/
     
       public ChatController getChatctr() {
         return control;

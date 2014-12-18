@@ -17,27 +17,15 @@ import javax.swing.ListCellRenderer;
  * @author Machd
  */
 public class CellRender extends JLabel implements ListCellRenderer {
-    ////////////////////////////////////
-    ////////////DECLARATIONS////////////
-    ////////////////////////////////////
+
     private JList list;
     private  HashMap<Integer,Integer> usersNotif=new HashMap<Integer,Integer>();
-    
-    public void setList(JList list) {
-        this.list = list;
-    }
-    
-    ////////////////////////////////////
-    ////////////CONSTRUCTEUR////////////
-    ////////////////////////////////////
-    
+
     public CellRender() {
         setOpaque(true);
     }
 
-    /////////////////////////////////////////////
-    //////Ajout - Retrait de notification////////
-    /////////////////////////////////////////////
+    /**Ajout - Retrait de notification*/
     
     public void addNotif(int x) {
         int aux=1;
@@ -102,7 +90,9 @@ public class CellRender extends JLabel implements ListCellRenderer {
     void deNotif(int indexOf) {
         usersNotif.remove(indexOf);
     }
-    
+    public void setList(JList list) {
+        this.list = list;
+    }
     
     
     

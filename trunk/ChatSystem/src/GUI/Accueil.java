@@ -7,9 +7,7 @@ package GUI;
 
 import java.io.IOException;
 
-/**
- *
- * @author Samih
+/**Vue d'accueil du programme, qui propose d'entrer un nickname et de se connecter.
  */
 public class Accueil extends javax.swing.JPanel {
     private ChatGUI gui;

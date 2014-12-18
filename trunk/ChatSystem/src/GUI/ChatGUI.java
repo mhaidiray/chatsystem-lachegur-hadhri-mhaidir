@@ -13,9 +13,7 @@ import java.text.ParseException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author lachegur
+/**Interface graphique du système, et façade reliant tous les objets graphiques au contrôleur du programme.
  */
 public class ChatGUI extends JFrame implements Runnable {
 

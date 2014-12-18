@@ -12,9 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-/**
- *
- * @author Machd
+/**Classe permettant de styliser les cases de la liste d'utilisateurs, elle permet d'en mettre une en valeur quand un message est reçu, par exemple.
  */
 public class CellRender extends JLabel implements ListCellRenderer {
 

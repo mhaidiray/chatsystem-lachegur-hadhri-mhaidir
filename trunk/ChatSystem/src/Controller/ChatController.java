@@ -13,25 +13,30 @@ import java.net.SocketException;
 import java.text.ParseException;
 import java.util.HashMap;
 
-/**
- *
- * @author lachegur
+/**Classe contenant à la fois le modèle et le contrôleur du système, elle sert d'intermédiaire entre les interfaces graphiques et réseau, qui sont les deux vues du programme.
  */
 public class ChatController {
     
     /////////////////////////////////////////////////////////////////////
     // MODEL : LOCAL NICKNAME AND LIST OF [Nickname, Ip Address] ////////
     /////////////////////////////////////////////////////////////////////
-    /** Nickname local */
+    
+    /** Modèle : Nickname local */
     private String nickname;
-    /**Contient les personnes connectées */
+    /** Modèle : Liste des utilisateurs connectés et de leurs adresses ip */
     HashMap<String,InetAddress> users;
     
     //////////////
     //GUI and NI//
     //////////////
-
+    
+    /**
+     * Interface graphique du système
+     */
     private ChatGUI gui;
+    /**
+     * Interface réseau du système
+     */
     private ChatNI ni;
     
     ////////////////////////////////////

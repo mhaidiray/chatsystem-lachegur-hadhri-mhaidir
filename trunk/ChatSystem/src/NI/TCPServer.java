@@ -9,9 +9,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-/**
- *
- * @author Machd
+/**Serveur TCP du programme, toujours en attente de connexions entrantes, il lance une instance TCPReceiver dès qu'il en détecte une.
  */
 public class TCPServer extends Thread{
     ////////////////////////////////////

@@ -19,9 +19,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.text.ParseException;
-/**
- *
- * @author Machd
+
+/**Classe réceptrice de messages UDP.
  */
 public class UDPReceiver implements Runnable{
     ////////////////////////////////////

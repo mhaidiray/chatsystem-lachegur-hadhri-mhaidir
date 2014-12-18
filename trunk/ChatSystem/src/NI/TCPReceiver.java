@@ -17,9 +17,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.text.ParseException;
 
-/**
- *
- * @author Machd
+/**Classe réceptrice de fichiers, elle est lancée lorsqu'une connexion entrante est détectée, et se ferme lorsque le transfert de fichier est terminé.
  */
 public class TCPReceiver extends Thread {
     

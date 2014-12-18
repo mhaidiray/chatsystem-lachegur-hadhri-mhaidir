@@ -13,9 +13,8 @@ import java.net.*;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-/**
- *
- * @author Machd
+
+/**Classe émettrice de messages UDP.
  */
 public class UDPSender {
     

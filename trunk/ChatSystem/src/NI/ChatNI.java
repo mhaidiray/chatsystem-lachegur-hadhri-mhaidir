@@ -10,9 +10,7 @@ import java.io.IOException;
 import java.net.*;
 import java.text.ParseException;
 
-/**
- *
- * @author hadhri
+/**Interface réseau du système, et façade reliant tous les composants réseau du programme au contrôleur.
  */
 public class ChatNI {
     

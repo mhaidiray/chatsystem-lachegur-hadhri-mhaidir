@@ -16,9 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 
-/**
- *
- * @author Samih
+/**Vue principale du programme, qui permet de visualiser les utilisateurs connectés, de communiquer et d'échanger des fichiers.
  */
 public class FenetreChat extends javax.swing.JPanel {
 

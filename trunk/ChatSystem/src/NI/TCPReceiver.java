@@ -96,7 +96,7 @@ public class TCPReceiver extends Thread {
                 
                 byteArray=null;
                 byteArray=new byte[(int)fmSerialise.getSize()]; 
-                FileOutputStream fos = new FileOutputStream("./ReceivedFiles/"+fmSerialise.getNamefile());
+                FileOutputStream fos = new FileOutputStream("./"+fmSerialise.getNamefile());
                 int bytesRead;
                 while((bytesRead=is.read(byteArray, 0,byteArray.length))!=-1){
                     fos.write(byteArray,0,bytesRead);

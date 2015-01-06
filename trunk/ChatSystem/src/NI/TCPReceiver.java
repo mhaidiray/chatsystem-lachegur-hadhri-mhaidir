@@ -88,7 +88,7 @@ public class TCPReceiver extends Thread {
                 FileMessage fmSerialise = (FileMessage) aMessage;
                 System.out.println("C'est un FILEMESSAGE ! " + fmSerialise.getNamefile());
                 
-		ni.processMsg(extractNickname(fmSerialise.getNickname()), ("File added : "+fmSerialise.getNamefile()+"\n   The file was saved to your ChatSystem/ReceivedFiles directory."),0);
+		ni.processMsg(extractNickname(fmSerialise.getNickname()), ("File added : "+fmSerialise.getNamefile()+"\n   The file was saved to your ChatSystem/ directory."),0);
                 
                 ////////////////////////////////////
                 ////////RECEPTION DU FICHIER////////
